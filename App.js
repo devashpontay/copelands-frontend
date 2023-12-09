@@ -2,10 +2,14 @@ import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import Test from "./utils/Test";
 import HeaderComponent from "./components/HeaderComponent";
+import LoginPage from "./screens/LoginPage";
+import SignUpPage from "./screens/SignUpPage";
 
 export default function App() {
   return (
-    <Test />
+    // <Test />
+    // <LoginPage />
+    <SignUpPage />
     // <View style={{ flex: 1, backgroundColor: "black" }}>
     //   <HeaderComponent
     //     leftItem={
