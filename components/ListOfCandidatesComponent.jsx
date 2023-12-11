@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ListOfCandidatesComponent = ({ candidateData }) => {
   return (
@@ -35,36 +36,36 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    height: 280,
-    width: 370,
+    height: hp('30%'), 
+    width: wp('80%'), 
     alignItems: 'center',
   },
   headercontainer: {
     backgroundColor: 'white',
-    paddingLeft: 5,
-    borderBottomWidth: 2,
+    paddingLeft: wp('1%'), 
+    borderBottomWidth: wp('0.5%'),
     width: '100%',
-    height: 50,
+    height: hp('5%'), 
     justifyContent: 'center',
   },
   candidatesContainer: {
     width: '100%',
-    paddingHorizontal: 10,
+    paddingHorizontal: wp('2%'), 
   },
   candidateChoice: {
     backgroundColor: '#F0F0F0',
-    marginVertical: 5,
-    padding: 10,
-    borderRadius: 5,
+    marginVertical: hp('1%'), 
+    padding: wp('1%'), 
+    borderRadius: wp('1%'), 
   },
   candidateText: {
-    fontSize: 16,
+    fontSize: hp('1.6%'), 
     color: '#333',
   },
   textHeader: {
     color: 'black',
-    fontSize: 18,
+    fontSize: hp('2.2%'), 
     fontWeight: '600',
-    left: 10,
+    left: wp('1%'), 
   },
 });

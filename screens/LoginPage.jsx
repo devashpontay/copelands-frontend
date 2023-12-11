@@ -1,5 +1,6 @@
-import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
+import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity } from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -89,74 +90,75 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     position: 'absolute',
-    top: 90,
+    top: hp('10%'),
     alignItems: 'center',
   },
   imageLogo: {
-    width: 130,
-    height: 130,
+    width: wp('35%'), 
+    height: hp('18%'), 
   },
   mainContainer: {
     borderTopLeftRadius: 50,
     backgroundColor: 'white',
-    width: '100%',
-    height: 633,
+    width: wp('100%'), 
+    height: hp('68%'), 
     position: 'absolute',
     alignItems: 'center',
-    top: 260,
+    bottom: 10,
   },
   footer: {
     backgroundColor: 'black',
     width: '100%',
-    height: 50,
+    height: hp('6%'),
     position: 'absolute',
     alignItems: 'center',
-    top: 587,
+    top: hp('63%'),
   },
   textContainer: {
     position: 'absolute',
-    top: 80,
+    top: hp('7%'),
   },
   textLogin: {
-    fontSize: 40,
+    fontSize: hp('6%'),
     color: 'black',
+    fontWeight: '600',
   },
   inputContainer: {
-    width: '70%',
+    width: wp('75%'),
     borderWidth: 1,
     borderColor: 'black',
-    borderRadius: 10,
-    padding: 15,
-    top: 180,
+    borderRadius: wp('5%'),
+    padding: hp('2%'),
+    top: hp('18%'),
   },
   input: {
-    fontSize: 18,
+    fontSize: hp('2.5%'),
     color: 'black',
   },
   inputContainerPass: {
-    width: '70%',
+    width: wp('75%'),
     borderWidth: 1,
     borderColor: 'black',
-    borderRadius: 10,
-    padding: 15,
-    top: 200,
+    borderRadius: wp('5%'),
+    padding: hp('2%'),
+    top: hp('20%'),
   },
   inputPass: {
-    fontSize: 18,
+    fontSize: hp('2.5%'),
     color: 'black',
   },
   buttonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    top: 238,
+    top: hp('25%'),
   },
   button: {
     backgroundColor: '#253237',
-    width: 288,
-    padding: 23,
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    width: wp('75%'),
+    padding: hp('3%'),
+    borderTopLeftRadius: wp('10%'),
+    borderBottomLeftRadius: wp('10%'),
+    borderBottomRightRadius: wp('10%'),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -165,15 +167,19 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   textAccContainer: {
-    top: 317,
+    // top: hp('31.7%'),
+    position: 'absolute',
+    width: wp('100%'),
+    bottom: hp('10%'),
+    alignItems: 'center',
   },
   textAccount: {
-    fontSize: 15,
+    fontSize: hp('2%'),
   },
   textSignUp: {
-    fontSize: 15,
+    fontSize: hp('2%'),
     textDecorationLine: 'underline',
-    color: 'blue', 
+    color: 'blue',
     fontWeight: '600',
   },
 });

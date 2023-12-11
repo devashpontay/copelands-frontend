@@ -23,9 +23,9 @@ const Test = () => {
         {/* <ListOfCandidatesComponent /> */}
         {/* <TheDeleteBtnComponent /> */}
         {/* <SubmitAndGetWinnerComponent /> */}
-        {/* <WinnerButtonComponent /> */}
+        <WinnerButtonComponent />
         {/* <TheWinnerComponent /> */}
-        <LoginPage />
+        {/* <LoginPage /> */}
     </View>
   )
 }

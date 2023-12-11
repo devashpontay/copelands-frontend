@@ -1,28 +1,29 @@
 import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const SignUpPage = () => {
-    const [name, setName] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-    const handleNameChange = (text) => {
-        setName(text);
-      };
-      
-      const handleUsernameChange = (text) => {
-        setUsername(text);
-      };
-    
-      const handlePasswordChange = (text) => {
-        setPassword(text);
-      };
+  const handleNameChange = (text) => {
+    setName(text);
+  };
 
-      const handleSignUpPress = () => {
-        // Handle the click event for "Sign up!"
-        console.log("Sign up! pressed");
-        // Add navigation logic or other actions as needed
-      };
+  const handleUsernameChange = (text) => {
+    setUsername(text);
+  };
+
+  const handlePasswordChange = (text) => {
+    setPassword(text);
+  };
+
+  const handleSignUpPress = () => {
+    // Handle the click event for "Sign up!"
+    console.log("Sign up! pressed");
+    // Add navigation logic or other actions as needed
+  };
 
   return (
     <View style={styles.container}>
@@ -35,10 +36,10 @@ const SignUpPage = () => {
         />
       </View>
       <View style={styles.textContainer}>
-            <Text style={styles.textLogin}>Sign Up</Text>
-        </View>
+        <Text style={styles.textSign}>Sign Up</Text>
+      </View>
 
-         {/* main section */}
+      {/* main section */}
       <View style={styles.mainContainer}>
         {/* NAME */}
         <View style={styles.inputNameContainer}>
@@ -48,7 +49,7 @@ const SignUpPage = () => {
             placeholderTextColor="grey"
             value={name}
             onChangeText={handleNameChange}
-            />
+          />
         </View>
         {/* USERNAME */}
         <View style={styles.inputUsernameContainer}>
@@ -58,7 +59,7 @@ const SignUpPage = () => {
             placeholderTextColor="grey"
             value={username}
             onChangeText={handleUsernameChange}
-            />
+          />
         </View>
 
         {/* PASSWORD */}
@@ -69,25 +70,25 @@ const SignUpPage = () => {
             placeholderTextColor="grey"
             value={password}
             onChangeText={handlePasswordChange}
-            />
+          />
         </View>
 
         {/* button sign in */}
         <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.textSignIn}>Sign in</Text>
-            </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.textSignIn}>Sign in</Text>
+          </TouchableOpacity>
         </View>
       </View>
       {/* description */}
       <View style={styles.textAccContainer}>
-          <Text style={styles.textAccount}>
-            Already have an account?{" "}
-            <TouchableOpacity onPress={handleSignUpPress}>
-              <Text style={styles.textSignUp}>Login!</Text>
-            </TouchableOpacity>
-          </Text>
-        </View>
+        <Text style={styles.textAccount}>
+          Already have an account?{" "}
+          <TouchableOpacity onPress={handleSignUpPress}>
+            <Text style={styles.textSignUp}>Login!</Text>
+          </TouchableOpacity>
+        </Text>
+      </View>
     </View>
   );
 };
@@ -103,79 +104,79 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     position: 'absolute',
-    top: 90,
+    top: hp('6%'), 
     alignItems: 'center',
   },
   imageLogo: {
-    width: 130,
-    height: 130,
+    width: wp('35%'), 
+    height: hp('18%'), 
   },
   mainContainer: {
     borderTopLeftRadius: 50,
-    backgroundColor: 'white',
-    width: "100%",
-    height: "64%",
-    position: 'absolute', 
+    backgroundColor: '##d9d9d9',
+    width: wp('100%'), 
+    height: hp('65%'), 
+    position: 'absolute',
     alignItems: 'center',
-    bottom: 4,
+    bottom: 0,
   },
-  textContainer:{
-    position: 'absolute', 
-    top: 230,
+  textContainer: {
+    position: 'absolute',
+    top: hp('25%'), 
   },
-  textLogin: {
-    fontSize: 51,
+  textSign: {
+    fontSize: hp('6%'), 
     color: 'white',
     fontWeight: '600',
   },
   inputNameContainer: {
-    width: '75%',
+    width: wp('75%'), 
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 10,
-    padding: 15,
-    top: 65,
+    padding: hp('1.5%'), 
+    top: hp('8%'), 
   },
   inputName: {
-    fontSize: 18,
+    fontSize: hp('2%'), 
     color: 'black',
   },
   inputUsernameContainer: {
-    width: '75%',
+    width: wp('75%'), 
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 10,
-    padding: 15,
-    top: 90,
+    padding: hp('1.5%'), 
+    top: hp('11%'), 
   },
   inputUsername: {
-    fontSize: 18,
+    fontSize: hp('2%'), 
     color: 'black',
   },
   inputPasswordContainer: {
-    width: '75%',
+    width: wp('75%'), 
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 10,
-    padding: 15,
-    top: 114,
+    padding: hp('1.5%'), 
+    top: hp('14%'), 
   },
   inputPassword: {
-    fontSize: 18,
+    fontSize: hp('2%'), 
     color: 'black',
   },
   buttonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    top: 150,
+    top: hp('18%'), 
   },
   button: {
     backgroundColor: '#253237',
-    width: 309,
-    padding: 23,
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    width: wp('75%'), 
+    padding: hp('2.5%'), 
+    borderTopLeftRadius: hp('3.5%'), 
+    borderBottomLeftRadius: hp('3.5%'), 
+    borderBottomRightRadius: hp('3.5%'), 
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -184,15 +185,19 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   textAccContainer: {
-    top: 317,
+    position: 'absolute',
+    width: wp('100%'),
+    bottom: hp('8%'),
+    alignItems: 'center',
+    // top: hp('38%'), 
   },
   textAccount: {
-    fontSize: 15,
+    fontSize: hp('2%'), 
   },
   textSignUp: {
-    fontSize: 15,
+    fontSize: hp('2%'), 
     textDecorationLine: 'underline',
-    color: 'blue', 
+    color: 'blue',
     fontWeight: '600',
   },
 });

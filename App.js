@@ -4,12 +4,13 @@ import Test from "./utils/Test";
 import HeaderComponent from "./components/HeaderComponent";
 import LoginPage from "./screens/LoginPage";
 import SignUpPage from "./screens/SignUpPage";
+import MainPage from "./screens/MainPage";
+import NewHeaderComponent from "./components/NewHeaderComponent";
 
 export default function App() {
   return (
-    // <Test />
-    // <LoginPage />
-    <SignUpPage />
+    // <MainPage />
+    <Test />
     // <View style={{ flex: 1, backgroundColor: "black" }}>
     //   <HeaderComponent
     //     leftItem={

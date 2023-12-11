@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const DetailsFormModalComponent = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -70,6 +71,7 @@ const DetailsFormModalComponent = () => {
             </View>
 
             <View style={styles.line}></View>
+
             <View style={styles.fillUpContainer}>
               <View style={styles.titleContainer}>
                 <Text style={styles.textTitle}>Title</Text>
@@ -83,6 +85,7 @@ const DetailsFormModalComponent = () => {
                   />
                 </View>
               </View>
+
               <View style={styles.categoryContainer}>
                 <Text style={styles.textCategory}>Category</Text>
                 <View style={styles.inputContainerCategory}>
@@ -109,6 +112,7 @@ const DetailsFormModalComponent = () => {
                   />
                 </View>
               </View>
+              
             </View>
 
             <View style={styles.lineSeparator}></View>
@@ -159,16 +163,11 @@ const styles = StyleSheet.create({
     modalContent: {
       position: 'relative',
       backgroundColor: '#253237', // kung ng modal yung box
-      padding: 20,
-      height: "80%", 
-      width: "90%",  
+      padding: wp('4%'),
+      height: hp('80%'), 
+      width: wp('90%'),  
       flexDirection: 'row',
       justifyContent: 'space-between',
-    },
-    rowContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      bottom: 323,
     },
     headerContainer: {
       flexDirection: 'row',
