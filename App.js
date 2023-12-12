@@ -1,27 +1,28 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
-import Test from "./utils/Test";
-import HeaderComponent from "./components/HeaderComponent";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import MainPage from "./screens/MainPage";
+import VotingSessionPage from "./screens/VotingSessionPage";
 import LoginPage from "./screens/LoginPage";
 import SignUpPage from "./screens/SignUpPage";
 
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
-    // <Test />
-    // <LoginPage />
-    <SignUpPage />
-    // <View style={{ flex: 1, backgroundColor: "black" }}>
-    //   <HeaderComponent
-    //     leftItem={
-    //       <Button
-    //         title="Back"
-    //         color="white"
-    //         accessibilityLabel="Learn more about this purple button"
-    //       />
-    //     }
-    //     rightItem={<Text>Hello world</Text>}
-    //   />
-    // </View>
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+        initialRouteName="LoginPage"
+      >
+        <Stack.Screen name="LoginPage" component={LoginPage} />
+        <Stack.Screen name="SignUpPage" component={SignUpPage} />
+        <Stack.Screen name="MainPage" component={MainPage} />
+        <Stack.Screen name="VotingSessionPage" component={VotingSessionPage} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

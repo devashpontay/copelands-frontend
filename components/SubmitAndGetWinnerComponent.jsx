@@ -1,5 +1,9 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const SubmitAndGetWinnerComponent = () => {
   return (
@@ -11,41 +15,40 @@ const SubmitAndGetWinnerComponent = () => {
         <Text style={styles.textStyleWinner}>GET WINNER</Text>
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
-export default SubmitAndGetWinnerComponent
+export default SubmitAndGetWinnerComponent;
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#253237',
-        width: 370,
-        height: 88,     
-    },
-    submitButton: {
-        backgroundColor: '#5C6B73', 
-        width: 370,
-        height: 40,
-        justifyContent: 'center', 
-        alignItems: 'center',
-    },
-    textStyleSubmit: {
-        fontSize: 15,
-        fontWeight: '600',
-        color: 'white',
-    },
-    winnerButton:{
-        backgroundColor: '#5C6B73', 
-        width: 370,
-        height: 40,
-        justifyContent: 'center', 
-        alignItems: 'center',
-        top: 9,
-        
-    },
-    textStyleWinner: {
-        fontSize: 15,
-        fontWeight: '600',
-        color: 'white',
-    },
-})
+  container: {
+    backgroundColor: "#253237",
+    width: wp("80%"),
+    height: hp("10%"),
+  },
+  submitButton: {
+    backgroundColor: "#5C6B73",
+    width: wp("80%"),
+    height: hp("4.5%"),
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textStyleSubmit: {
+    fontSize: hp("1.5%"),
+    fontWeight: "600",
+    color: "white",
+  },
+  winnerButton: {
+    backgroundColor: "#5C6B73",
+    width: wp("80%"),
+    height: hp("4.5%"),
+    justifyContent: "center",
+    alignItems: "center",
+    top: hp("1%"),
+  },
+  textStyleWinner: {
+    fontSize: hp("1.5%"),
+    fontWeight: "600",
+    color: "white",
+  },
+});
