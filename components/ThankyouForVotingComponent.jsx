@@ -1,6 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const ThankyouForVotingComponent = () => {
   return (
@@ -26,28 +29,28 @@ export default ThankyouForVotingComponent;
 
 const styles = StyleSheet.create({
   container: {
-    height: hp('25%'), 
-    width: wp('85%'), 
-    alignItems: 'center',
+    height: hp("25%"),
+    width: wp("85%"),
+    alignItems: "center",
   },
   thankyouContainer: {
-    backgroundColor: 'tomato',
-    width: wp('85%'), 
-    height: hp('8%'), 
-    borderRadius: wp('5%'), 
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "tomato",
+    width: wp("85%"),
+    height: hp("8%"),
+    borderRadius: wp("5%"),
+    justifyContent: "center",
+    alignItems: "center",
   },
   textTY: {
-    fontSize: hp('3%'), 
-    color: 'white',
-    fontWeight: '600',
+    fontSize: hp("3%"),
+    color: "white",
+    fontWeight: "600",
   },
   textCandidateContainer: {
-    right: wp('25%'), 
-    top: hp('2%'), 
+    right: wp("25%"),
+    top: hp("2%"),
   },
   textCandidate: {
-    color: 'white',
+    color: "white",
   },
 });

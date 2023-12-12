@@ -4,12 +4,12 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import BackHeaderComponent from '../components/BackHeaderComponent'
 
 
-const VotingSessionPage  = () => {
+const VotingSessionPage  = ({navigation}) => {
     return (
       <View style={{flex: 1, backgroundColor: '#253237', alignItems: 'center', justifyContent: 'center'}}>
         {/* header */}
         <View>
-            <BackHeaderComponent />
+            <BackHeaderComponent navigation={navigation}/>
             {/* i want also display a Litof CandidatesComponets here */}
         </View>
       </View>

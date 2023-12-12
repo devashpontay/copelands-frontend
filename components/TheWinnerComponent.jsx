@@ -1,6 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const TheWinnerComponent = ({ winnerName }) => {
   return (
@@ -15,7 +18,7 @@ const TheWinnerComponent = ({ winnerName }) => {
 
 const App = () => {
   // Assuming you have a state or variable that holds the winner's name
-  const winnerName = 'Buddy skyyflakes';
+  const winnerName = "Buddy skyyflakes";
 
   return (
     <View>
@@ -29,15 +32,15 @@ export default App;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'green',
-    width: wp('85%'), 
-    height: hp('8%'),
-    justifyContent: 'center',
+    backgroundColor: "green",
+    width: wp("85%"),
+    height: hp("8%"),
+    justifyContent: "center",
   },
   textWinner: {
-    fontSize: hp('2.2%'), 
-    color: 'white',
-    fontWeight: '600',
-    marginLeft: wp('3%'), 
+    fontSize: hp("2.2%"),
+    color: "white",
+    fontWeight: "600",
+    marginLeft: wp("3%"),
   },
 });

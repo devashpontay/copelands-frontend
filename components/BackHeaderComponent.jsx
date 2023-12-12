@@ -6,11 +6,11 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const BackHeaderComponent = () => {
+const BackHeaderComponent = ({navigation}) => {
 
   return (
     <View style={styles.headerContainer}>
-      <TouchableOpacity style={styles.iconContainer}>
+      <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('MainPage')}>
         <View style={styles.circle}>
           <Icon name="arrow-left" size={25} color="#5c6b73" />
         </View>
