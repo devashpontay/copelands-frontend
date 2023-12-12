@@ -68,7 +68,7 @@ const NewDetailsform = ({ closeModal, _x }) => {
       moderator,
       title,
       category,
-      status,
+      status: 'OPEN',
       candidateCount,
       candidates,
     };
