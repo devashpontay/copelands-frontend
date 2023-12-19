@@ -6,14 +6,13 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const ElectionItemComponent = ({ navigation, id, category, title, status }) => {
-  const [currentTime, setCurrentTime] = useState(new Date());
-
+const ElectionItemComponent = ({ navigation, user, idNo, category, title, status }) => {
+  console.log(idNo + "HAHAHAHA")
 
   return (
     <View>
       <TouchableOpacity
-        onPress={() => navigation.navigate("VotingSessionPage")}
+        onPress={() => navigation.navigate("VotingSessionPage", { user, idNo })}
         style={styles.boxContainer}
       >
         <View style={styles.rowContainer}>
@@ -31,9 +30,7 @@ const ElectionItemComponent = ({ navigation, id, category, title, status }) => {
         </View>
 
         <View style={styles.timeContainer}>
-          <Text style={styles.timeStyle}>
-            Started - XXXXXXXX
-          </Text>
+          <Text style={styles.timeStyle}>Started - XXXXXXXX</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -59,7 +56,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: wp("2%"),
     borderColor: "#5C6B73",
-    marginBottom: 20,
+    marginBottom: hp("2%"),
   },
   rowContainer: {
     flexDirection: "row",

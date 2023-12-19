@@ -1,53 +1,54 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const BackHeaderComponent = ({navigation}) => {
+const BackHeaderComponent = ({ navigation }) => {
+  const handleBackPress = () => {
+    navigation.goBack();
+  };
 
   return (
-    <View style={styles.headerContainer}>
-      <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('MainPage')}>
-        <View style={styles.circle}>
-          <Icon name="arrow-left" size={25} color="#5c6b73" />
+    <View style={styles.container}>
+      <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
+        <View style={styles.iconBack}>
+          <Icon name="arrow-back" size={hp("3%")} color="yellow" />
         </View>
-        <Text style={styles.textStyle}>Back</Text>
+        {/* <Text style={styles.headerText}>Back</Text> */}
       </TouchableOpacity>
+      <View style={styles.backContainer}>
+        <Text style={styles.headerText}>Back</Text>
+      </View>
     </View>
   );
 };
 
-export default BackHeaderComponent;
-
 const styles = StyleSheet.create({
-  headerContainer: {
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexDirection: 'row',
     backgroundColor: '#5c6b73',
+    alignItems: 'center',
     height: hp('7%'),
     width: wp('100%'),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    bottom: hp('42.5%'),
+    // paddingLeft: wp('3%'),
+    bottom: hp('27.5%'),
   },
-  iconContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: wp('5%'),
+  backContainer: {
+
   },
-  circle: {
-    backgroundColor: '#9db4c0',
-    width: hp('4%'), // Adjust the size of the circle as needed
-    height: hp('4%'),
-    borderRadius: hp('2%'), // To make it a perfect circle
+  headerText: {
+    fontSize: hp('2.5%'),
+    color: '#FFFFFF',
+  },
+  iconBack: {
+    width: hp('5%'),
+    height: hp('5%'),
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: wp('2%'), // Adjust the spacing between the circle and text
-  },
-  textStyle: {
-    fontSize: hp('2%'),
-    color: '#fff',
+    marginLeft: wp('3%'),
   },
 });
+
+export default BackHeaderComponent;

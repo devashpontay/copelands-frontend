@@ -15,7 +15,8 @@ import {
 } from "react-native-responsive-screen";
 import { createElection } from "../services/CopelandMethodService";
 
-const NewDetailsform = ({ closeModal, _x }) => {
+const NewDetailsform = ({ navigation, route }) => {
+  const moderator = route.params;
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [candidateCount, setcandidateCount] = useState("");
@@ -51,21 +52,8 @@ const NewDetailsform = ({ closeModal, _x }) => {
   };
 
   const handleSubmission = () => {
-    // Implement your form submission logic here
-    // You can send the form data to an API or perform any other necessary actions
-    // For now, let's just log the form data to the console
-
-    // console.log({
-    //   moderator,
-    //   title,
-    //   category,
-    //   status,
-    //   candidateCount,
-    //   candidates,
-    // });
-
     const election = {
-      moderator,
+      moderator: moderator.moderator,
       title,
       category,
       status: 'OPEN',
@@ -83,10 +71,11 @@ const NewDetailsform = ({ closeModal, _x }) => {
 
     // Reset the form after submission
     resetInputs();
-    closeModal();
+    moderator.forceUpdate();
+    navigation.goBack();
 
     //Re render MainPage component
-    _x();
+
   };
 
   useEffect(() => {
@@ -101,130 +90,129 @@ const NewDetailsform = ({ closeModal, _x }) => {
 
   return (
     <View style={styles.container}>
-      <Modal
+      {/* <Modal
         animationType="slide"
         transparent={true}
         visible={true}
         onRequestClose={closeModal}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <View style={styles.headerMainContainer}>
-              <View style={styles.headerInnerContainer}>
-                <Text style={styles.textHeader}>
-                  Fill out voting details form
-                </Text>
-              </View>
-              <View style={styles.iconContainer}>
-                <TouchableOpacity onPress={closeModal}>
-                  <Icon name="times-circle" size={30} color="#5C6B73" />
-                </TouchableOpacity>
-              </View>
+      > */}
+      <View style={styles.modalContainer}>
+        <View style={styles.modalContent}>
+          <View style={styles.headerMainContainer}>
+            <View style={styles.headerInnerContainer}>
+              <Text style={styles.textHeader}>
+                Fill out voting details form
+              </Text>
             </View>
-
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-              <View style={styles.fillUpContainer}>
-                <View style={styles.titleHolder}>
-                  <View style={styles.textStyleTitle}>
-                    <Text style={styles.textTitle}>Title</Text>
-                  </View>
-                  <View style={styles.inputContainerTitle}>
-                    <TextInput
-                      style={styles.inputTitle}
-                      placeholderTextColor="#5C6B73"
-                      placeholder="Enter a title not exceeding 46 letters"
-                      value={title}
-                      onChangeText={handleTitleChange}
-                    />
-                  </View>
-                </View>
-
-                <View style={styles.categoryHolder}>
-                  <View style={styles.textStyleCategory}>
-                    <Text style={styles.textCategory}>Category</Text>
-                  </View>
-                  <View style={styles.inputContainerCategory}>
-                    <TextInput
-                      style={styles.inputCategory}
-                      placeholderTextColor="#5C6B73"
-                      placeholder="Example: FOOD, ELECTION, MOVIE..."
-                      value={category}
-                      onChangeText={handleCategoryChange}
-                    />
-                  </View>
-                </View>
-
-                <View style={styles.candidateHolder}>
-                  <View style={styles.textStyleCandidate}>
-                    <Text style={styles.textCandidate}>
-                      Number of Candidates
-                    </Text>
-                  </View>
-                  <View style={styles.inputContainerCandidate}>
-                    <TextInput
-                      style={styles.inputCandidate}
-                      placeholderTextColor="#5C6B73"
-                      placeholder="Example: 2"
-                      keyboardType="numeric"
-                      value={candidateCount}
-                      onChangeText={handlecandidateCountChange}
-                    />
-                  </View>
-                </View>
-
-                <View style={styles.lineDivider}></View>
-              </View>
-
-              <View style={styles.namesContainer}>
-                {Array.from(
-                  { length: parseInt(candidateCount, 10) || 0 },
-                  (_, index) => (
-                    <View key={index} style={styles.nameInputContainer}>
-                      <Text style={styles.textNames}>{`Candidate #${
-                        index + 1
-                      }`}</Text>
-                      <View style={styles.inputContainerNames}>
-                        <TextInput
-                          style={styles.inputNames}
-                          placeholderTextColor="#5C6B73"
-                          placeholder={`Enter candidate #${index + 1} name`}
-                          value={candidates[index]}
-                          onChangeText={(text) =>
-                            handleCandidatesChange(text, index)
-                          }
-                        />
-                      </View>
-                    </View>
-                  )
-                )}
-              </View>
-            </ScrollView>
-
-            <View style={styles.btnContainer}>
-              <TouchableOpacity
-                style={[
-                  styles.submitButton,
-                  isFormValid
-                    ? styles.activeSubmitButton
-                    : styles.disabledSubmitButton,
-                ]}
-                onPress={handleSubmission}
-                disabled={!isFormValid}
-              >
-                <Text
-                  style={[
-                    styles.submitButtonText,
-                    { color: isFormValid ? "white" : "#5c6b73" },
-                  ]}
-                >
-                  SUBMIT VOTE
-                </Text>
-                {/* this button will call the ElectionItemComponent page */}
+            <View style={styles.iconContainer}>
+              <TouchableOpacity onPress={() => navigation.goBack()} >
+                <Icon name="times-circle" size={30} color="#5C6B73" />
               </TouchableOpacity>
             </View>
           </View>
+
+          <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <View style={styles.fillUpContainer}>
+              <View style={styles.titleHolder}>
+                <View style={styles.textStyleTitle}>
+                  <Text style={styles.textTitle}>Title</Text>
+                </View>
+                <View style={styles.inputContainerTitle}>
+                  <TextInput
+                    style={styles.inputTitle}
+                    placeholderTextColor="#5C6B73"
+                    placeholder="Enter a title not exceeding 46 letters"
+                    value={title}
+                    onChangeText={handleTitleChange}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.categoryHolder}>
+                <View style={styles.textStyleCategory}>
+                  <Text style={styles.textCategory}>Category</Text>
+                </View>
+                <View style={styles.inputContainerCategory}>
+                  <TextInput
+                    style={styles.inputCategory}
+                    placeholderTextColor="#5C6B73"
+                    placeholder="Example: FOOD, ELECTION, MOVIE..."
+                    value={category}
+                    onChangeText={handleCategoryChange}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.candidateHolder}>
+                <View style={styles.textStyleCandidate}>
+                  <Text style={styles.textCandidate}>
+                    Number of Candidates
+                  </Text>
+                </View>
+                <View style={styles.inputContainerCandidate}>
+                  <TextInput
+                    style={styles.inputCandidate}
+                    placeholderTextColor="#5C6B73"
+                    placeholder="Example: 2"
+                    keyboardType="numeric"
+                    value={candidateCount}
+                    onChangeText={handlecandidateCountChange}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.lineDivider}></View>
+            </View>
+
+            <View style={styles.namesContainer}>
+              {Array.from(
+                { length: parseInt(candidateCount, 10) || 0 },
+                (_, index) => (
+                  <View key={index} style={styles.nameInputContainer}>
+                    <Text style={styles.textNames}>{`Candidate #${index + 1
+                      }`}</Text>
+                    <View style={styles.inputContainerNames}>
+                      <TextInput
+                        style={styles.inputNames}
+                        placeholderTextColor="#5C6B73"
+                        placeholder={`Enter candidate #${index + 1} name`}
+                        value={candidates[index]}
+                        onChangeText={(text) =>
+                          handleCandidatesChange(text, index)
+                        }
+                      />
+                    </View>
+                  </View>
+                )
+              )}
+            </View>
+          </ScrollView>
+
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
+              style={[
+                styles.submitButton,
+                isFormValid
+                  ? styles.activeSubmitButton
+                  : styles.disabledSubmitButton,
+              ]}
+              onPress={handleSubmission}
+              disabled={!isFormValid}
+            >
+              <Text
+                style={[
+                  styles.submitButtonText,
+                  { color: isFormValid ? "white" : "#5c6b73" },
+                ]}
+              >
+                SUBMIT VOTE
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </Modal>
+      </View>
+
+      {/* </Modal> */}
     </View>
   );
 };
@@ -236,12 +224,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
     backgroundColor: "#253237",
@@ -261,8 +249,9 @@ const styles = StyleSheet.create({
     marginLeft: wp("5%"),
   },
   textHeader: {
-    fontSize: hp("2.5%"),
+    fontSize: hp("1.8%"),
     color: "#fff",
+    fontFamily: 'ibmPlexMono-semiBold',
   },
   iconContainer: {
     marginRight: wp("4%"),

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -5,8 +6,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Animated,
 } from "react-native";
-import React, { useState } from "react";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,21 +18,60 @@ const SignUpPage = ({ navigation }) => {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [nameLabelPosition] = useState(new Animated.Value(hp("2%")));
+  const [usernameLabelPosition] = useState(new Animated.Value(hp("2%")));
+  const [passwordLabelPosition] = useState(new Animated.Value(hp("2%")));
 
-  const handleNameChange = (text) => {
-    setName(text);
+  const handleInputChange = (text, labelPosition, setStateFunction) => {
+    // Update the input value
+    setStateFunction(text); 
+
+    // Animate the label position when the user starts typing
+    animateLabel(text, labelPosition);
   };
 
-  const handleUsernameChange = (text) => {
-    setUsername(text);
+  const animateLabel = (text, labelPosition) => {
+    const newPosition = text === "" ? hp("2%") : hp("0%");
+    Animated.timing(labelPosition, {
+      toValue: newPosition,
+      duration: 250,
+      useNativeDriver: false,
+    }).start();
   };
 
-  const handlePasswordChange = (text) => {
-    setPassword(text);
+  const animateNameLabelOnFocus = () => {
+    Animated.timing(nameLabelPosition, {
+      toValue: hp("0%"),
+      duration: 250,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const animateUsernameLabelOnFocus = () => {
+    Animated.timing(usernameLabelPosition, {
+      toValue: hp("0%"),
+      duration: 250,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const animatePasswordLabelOnFocus = () => {
+    Animated.timing(passwordLabelPosition, {
+      toValue: hp("0%"),
+      duration: 250,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const animateLabelOnBlur = () => {
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmitPress = () => {
-    // Handle the click event for "Sign up!"
     const user = {
       name,
       username,
@@ -45,8 +85,6 @@ const SignUpPage = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-
-    // Add navigation logic or other actions as needed
   };
 
   const handleLoginPress = () => {
@@ -71,34 +109,86 @@ const SignUpPage = ({ navigation }) => {
       <View style={styles.mainContainer}>
         {/* NAME */}
         <View style={styles.inputNameContainer}>
+          <Animated.Text
+            style={[
+              styles.inputLabel,
+              { top: nameLabelPosition, left: wp("3%") },
+            ]}
+          >
+            Name
+          </Animated.Text>
           <TextInput
             style={styles.inputName}
-            placeholder="Name"
+            // placeholder="Name"
             placeholderTextColor="grey"
             value={name}
-            onChangeText={handleNameChange}
+            onFocus={() => animateNameLabelOnFocus(nameLabelPosition)}
+            onBlur={() => animateLabelOnBlur(name, nameLabelPosition)}
+            onChangeText={(text) =>
+              handleInputChange(text, nameLabelPosition, setName)
+            }
           />
         </View>
+
         {/* USERNAME */}
         <View style={styles.inputUsernameContainer}>
+          <Animated.Text
+            style={[
+              styles.inputLabel,
+              { top: usernameLabelPosition, left: wp("3%") },
+            ]}
+          >
+            Username
+          </Animated.Text>
           <TextInput
             style={styles.inputUsername}
-            placeholder="Username"
+            // placeholder="Username"
             placeholderTextColor="grey"
             value={username}
-            onChangeText={handleUsernameChange}
+            onFocus={() => animateUsernameLabelOnFocus(usernameLabelPosition)}
+            onBlur={() => animateLabelOnBlur(username, usernameLabelPosition)}
+            onChangeText={(text) =>
+              handleInputChange(text, usernameLabelPosition, setUsername)
+            }
           />
         </View>
 
         {/* PASSWORD */}
         <View style={styles.inputPasswordContainer}>
+          <Animated.Text
+            style={[
+              styles.inputLabel,
+              { top: passwordLabelPosition, left: wp("3%") },
+            ]}
+          >
+            Password
+          </Animated.Text>
           <TextInput
             style={styles.inputPassword}
-            placeholder="Password"
+            // placeholder="Password"
             placeholderTextColor="grey"
             value={password}
-            onChangeText={handlePasswordChange}
+            onFocus={() => animatePasswordLabelOnFocus(passwordLabelPosition)}
+            onBlur={() => animateLabelOnBlur(password, passwordLabelPosition)}
+            onChangeText={(text) =>
+              handleInputChange(text, passwordLabelPosition,  setPassword)
+            }
+            secureTextEntry={!showPassword}
           />
+          {/* Eye icon for toggling password visibility */}
+          <TouchableOpacity
+            style={styles.eyeIcon}
+            onPress={togglePasswordVisibility}
+          >
+            <Image
+              source={
+                showPassword
+                  ? require("../assets/image/eye-regular.png")
+                  : require("../assets/image/eye-slash-regular.png")
+              }
+              style={styles.eyeIconImage}
+            />
+          </TouchableOpacity>
         </View>
 
         {/* button sign in */}
@@ -121,8 +211,6 @@ const SignUpPage = ({ navigation }) => {
   );
 };
 
-export default SignUpPage;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -141,12 +229,12 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     borderTopLeftRadius: 50,
-    backgroundColor: "##d9d9d9",
+    backgroundColor: "white",
     width: wp("100%"),
-    height: hp("65%"),
+    height: hp("67%"),
     position: "absolute",
     alignItems: "center",
-    bottom: 0,
+    bottom: hp("0%"),
   },
   textContainer: {
     position: "absolute",
@@ -155,43 +243,68 @@ const styles = StyleSheet.create({
   textSign: {
     fontSize: hp("6%"),
     color: "white",
-    fontWeight: "600",
+    fontFamily: 'ibmPlexMono-bold'
   },
   inputNameContainer: {
     width: wp("75%"),
     borderWidth: 1,
     borderColor: "black",
-    borderRadius: 10,
-    padding: hp("1.5%"),
+    borderRadius: wp("3%"),
+    padding: hp("1%"),
     top: hp("8%"),
   },
   inputName: {
+    fontFamily: 'ibmPlexMono-bold',
     fontSize: hp("2%"),
     color: "black",
+    marginTop: hp("1%"), 
+    marginLeft: wp("1%"),
   },
   inputUsernameContainer: {
     width: wp("75%"),
     borderWidth: 1,
     borderColor: "black",
-    borderRadius: 10,
-    padding: hp("1.5%"),
+    borderRadius: wp("3%"),
+    padding: hp("1%"),
     top: hp("11%"),
   },
   inputUsername: {
+    fontFamily: 'ibmPlexMono-bold',
     fontSize: hp("2%"),
     color: "black",
+    marginTop: hp("1%"),
+    marginLeft: wp("1%"),
   },
   inputPasswordContainer: {
     width: wp("75%"),
     borderWidth: 1,
     borderColor: "black",
-    borderRadius: 10,
-    padding: hp("1.5%"),
-    top: hp("14%"),
+    borderRadius: wp("3%"),
+    padding: hp("1%"),
+    top: hp("14%"), 
+    position: "relative",
   },
   inputPassword: {
+    fontFamily: 'ibmPlexMono-bold',
     fontSize: hp("2%"),
     color: "black",
+    marginTop: hp("1%"),
+    marginLeft: wp("1%"),
+  },
+  inputLabel: {
+    position: "absolute",
+    fontSize: hp("2%"),
+    fontFamily: 'ibmPlexMono-semiBold',
+    color: "#5C6B73",
+  },
+  eyeIcon: {
+    position: "absolute",
+    right: wp("3%"),
+    top: hp("2%"),
+  },
+  eyeIconImage: {
+    width: wp("8%"),
+    height: hp("3.5%"),
   },
   buttonContainer: {
     alignItems: "center",
@@ -217,7 +330,6 @@ const styles = StyleSheet.create({
     width: wp("100%"),
     bottom: hp("8%"),
     alignItems: "center",
-    // top: hp('38%'),
   },
   textAccount: {
     fontSize: hp("2%"),
@@ -225,7 +337,9 @@ const styles = StyleSheet.create({
   textSignUp: {
     fontSize: hp("2%"),
     textDecorationLine: "underline",
-    color: "blue",
+    color: "black",
     fontWeight: "600",
   },
 });
+
+export default SignUpPage;

@@ -4,20 +4,21 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import PropTypes from "prop-types";
 
-const ListOfCandidatesComponent = ({ candidateData }) => {
+const ListOfCandidatesComponent = ({ candidateNames }) => {
   return (
     <View style={styles.container}>
-      {/* header */}
+      {/* Header */}
       <View style={styles.headercontainer}>
-        <Text style={styles.textHeader}>List of Candidates</Text>
+        <Text style={styles.textHeader}>List of Choices</Text>
       </View>
       <ScrollView style={styles.candidatesContainer}>
-        {candidateData?.map((candidate, index) => (
+        {candidateNames?.map((candidate, index) => (
           <View key={index} style={styles.candidateChoice}>
-            <Text style={styles.candidateText}>{`Candidate choice #${
+            <Text style={styles.candidateText}>{`${
               index + 1
-            }: ${candidate}`}</Text>
+            }. ${candidate}`}</Text>
           </View>
         ))}
       </ScrollView>
@@ -25,35 +26,20 @@ const ListOfCandidatesComponent = ({ candidateData }) => {
   );
 };
 
-const App = () => {
-  const candidateData = [
-    "John Doe",
-    "Jane Smith",
-    "Bob Johnson",
-    "alice",
-    "mark",
-    "ashley",
-    "Marin",
-    "jerry",
-    "Naomi Billonaa",
-  ];
-
-  return (
-    <View>
-      {/* Other components or views if needed */}
-      <ListOfCandidatesComponent candidateData={candidateData} />
-    </View>
-  );
+ListOfCandidatesComponent.propTypes = {
+  candidateNames: PropTypes.array,
 };
 
-export default App;
+export default ListOfCandidatesComponent;
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     height: hp("30%"),
-    width: wp("80%"),
+    width: wp("90%"),
     alignItems: "center",
+    bottom: hp("25%"),
+    marginLeft: wp("5%"),
   },
   headercontainer: {
     backgroundColor: "white",
