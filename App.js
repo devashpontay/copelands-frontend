@@ -27,8 +27,11 @@ export default function App() {
   }, []);
 
   if (loadFonts) {
+    console.log("@navigator")
     return <Navigator />;
   } else {
+    console.log("@else")
+
     return null;
   }
 }

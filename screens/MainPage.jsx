@@ -49,6 +49,8 @@ const MainPage = ({ navigation, route }) => {
             >
               <ElectionItemComponent
                 navigation={navigation}
+                user={moderator.moderator}
+                idNo={item.idNo}
                 category={item.category}
                 title={item.title}
                 status={item.status}

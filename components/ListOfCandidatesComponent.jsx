@@ -4,21 +4,21 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-
-const ListOfCandidatesComponent = ({ candidateNames = [] }) => {
-  console.log("Candidate Names in ListOfCandidatesComponent:", candidateNames);
+const ListOfCandidatesComponent = ({ candidateNames }) => {
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.headercontainer}>
-        <Text style={styles.textHeader}>List of Candidates</Text>
+        <Text style={styles.textHeader}>List of Choices</Text>
       </View>
       <ScrollView style={styles.candidatesContainer}>
         {candidateNames?.map((candidate, index) => (
           <View key={index} style={styles.candidateChoice}>
-            <Text style={styles.candidateText}>{`Candidate choice #${index + 1}: ${candidate}`}</Text>
+            <Text style={styles.candidateText}>{`${
+              index + 1
+            }. ${candidate}`}</Text>
           </View>
         ))}
       </ScrollView>
@@ -29,7 +29,6 @@ const ListOfCandidatesComponent = ({ candidateNames = [] }) => {
 ListOfCandidatesComponent.propTypes = {
   candidateNames: PropTypes.array,
 };
-
 
 export default ListOfCandidatesComponent;
 
