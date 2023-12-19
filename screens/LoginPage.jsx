@@ -6,6 +6,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Animated,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -17,6 +18,49 @@ import SignUpPage from "./SignUpPage";
 const LoginPage = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [usernameLabelPosition] = useState(new Animated.Value(hp("2%")));
+  const [passwordLabelPosition] = useState(new Animated.Value(hp("2%")));
+
+
+  const handleInputChange = (text, labelPosition, setStateFunction) => {
+    // Update the input value
+    setStateFunction(text); 
+
+    // Animate the label position when the user starts typing
+    animateLabel(text, labelPosition);
+  };
+
+  const animateUsernameLabelOnFocus = () => {
+    Animated.timing(usernameLabelPosition, {
+      toValue: hp("0%"),
+      duration: 250,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const animatePasswordLabelOnFocus = () => {
+    Animated.timing(passwordLabelPosition, {
+      toValue: hp("0%"),
+      duration: 250,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const animateLabelOnBlur = () => {
+  };
+
+  // const animatePasswordLabelOnBlur = () => {
+  // };
+
+  const animateLabel = (text, labelPosition) => {
+    const newPosition = text === "" ? hp("2%") : hp("0%");
+    Animated.timing(labelPosition, {
+      toValue: newPosition,
+      duration: 250,
+      useNativeDriver: false,
+    }).start();
+  };
 
   const handleUsernameChange = (text) => {
     setUsername(text);
@@ -24,6 +68,10 @@ const LoginPage = ({ navigation }) => {
 
   const handlePasswordChange = (text) => {
     setPassword(text);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSignInPress = () => {
@@ -68,22 +116,47 @@ const LoginPage = ({ navigation }) => {
         </View>
 
         <View style={styles.inputContainer}>
+          <Animated.Text
+             style={[
+              styles.inputLabel,
+              { top: usernameLabelPosition, left: wp("3%") },
+             ]}
+          >
+            Username
+          </Animated.Text>
           <TextInput
             style={styles.input}
-            placeholder="Username"
+            // placeholder="Username"
             placeholderTextColor="grey"
             value={username}
-            onChangeText={handleUsernameChange}
+            onFocus={() => animateUsernameLabelOnFocus(usernameLabelPosition)}
+            onBlur={() => animateLabelOnBlur(username, usernameLabelPosition)}
+            onChangeText={(text) =>
+              handleInputChange(text, usernameLabelPosition, setUsername)
+            }
           />
         </View>
 
         <View style={styles.inputContainerPass}>
+          <Animated.Text
+            style={[
+              styles.inputLabel,
+              { top: passwordLabelPosition, left: wp("3%") },
+            ]}
+          >
+            Password
+          </Animated.Text>
           <TextInput
             style={styles.inputPass}
-            placeholder="Password"
+            // placeholder="Password"
             placeholderTextColor="grey"
             value={password}
-            onChangeText={handlePasswordChange}
+            onFocus={() => animatePasswordLabelOnFocus(passwordLabelPosition)}
+            onBlur={() => animateLabelOnBlur(password, passwordLabelPosition)}
+            onChangeText={(text) =>
+              handleInputChange(text, passwordLabelPosition, setPassword)
+            }
+            secureTextEntry={!showPassword}
           />
         </View>
 
@@ -146,36 +219,40 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     position: "absolute",
-    top: hp("7%"),
+    top: hp("5%"),
   },
   textLogin: {
     fontSize: hp("6%"),
     color: "black",
-    fontWeight: "600",
+    fontFamily: 'ibmPlexMono-bold'
   },
   inputContainer: {
     width: wp("75%"),
     borderWidth: 1,
     borderColor: "black",
-    borderRadius: wp("5%"),
-    padding: hp("2%"),
+    borderRadius: wp("3%"),
+    padding: hp("0.3%"),
     top: hp("18%"),
   },
   input: {
-    fontSize: hp("2.5%"),
+    fontFamily: 'ibmPlexMono-bold',
+    fontSize: hp("2%"),
     color: "black",
+    marginLeft: wp("3%"),
   },
   inputContainerPass: {
     width: wp("75%"),
     borderWidth: 1,
     borderColor: "black",
-    borderRadius: wp("5%"),
-    padding: hp("2%"),
+    borderRadius: wp("3%"),
+    padding: hp("0.3%"),
     top: hp("20%"),
   },
   inputPass: {
-    fontSize: hp("2.5%"),
+    fontFamily: 'ibmPlexMono-bold',
+    fontSize: hp("2%"),
     color: "black",
+    marginLeft: wp("3%"),
   },
   buttonContainer: {
     alignItems: "center",
@@ -185,7 +262,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#253237",
     width: wp("75%"),
-    padding: hp("3%"),
+    padding: hp("2.5%"),
     borderTopLeftRadius: wp("10%"),
     borderBottomLeftRadius: wp("10%"),
     borderBottomRightRadius: wp("10%"),
@@ -194,6 +271,7 @@ const styles = StyleSheet.create({
   },
   textSignIn: {
     fontWeight: "600",
+    // fontFamily: 'ibmPlexMono-semiBold',
     color: "white",
   },
   textAccContainer: {
@@ -209,7 +287,13 @@ const styles = StyleSheet.create({
   textSignUp: {
     fontSize: hp("2%"),
     textDecorationLine: "underline",
-    color: "blue",
+    color: "black",
     fontWeight: "600",
+  },
+  inputLabel: {
+    // fontWeight: '600',
+    fontFamily: 'ibmPlexMono-semiBold',
+    color: "#5C6B73",
+    fontSize: hp("2%"),
   },
 });

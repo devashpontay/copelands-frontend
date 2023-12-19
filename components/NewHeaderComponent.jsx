@@ -7,11 +7,12 @@ import {
 } from "react-native-responsive-screen";
 import NewDetailsform from "./NewDetailsform";
 
-const NewHeaderComponent = ({ x }) => {
+const NewHeaderComponent = ({ forceUpdate, navigation, moderator }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handlePlusButtonPress = () => {
-    setModalVisible(true);
+    // setModalVisible(true);
+    navigation.navigate("NewDetailsForm", { moderator, forceUpdate });
   };
 
   return (
@@ -28,17 +29,18 @@ const NewHeaderComponent = ({ x }) => {
         </View>
       </TouchableOpacity>
 
-      <Modal
+      {/* <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
         <NewDetailsform
-          _x={x}
+          forceUpdate={forceUpdate}
           closeModal={() => setModalVisible(false)}
+          moderator={moderator}
         />
-      </Modal>
+      </Modal> */}
     </View>
   );
 };
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    top: 50,
+    top: hp("4%"),
   },
   textHolder: {
     marginLeft: wp("5%"),
@@ -61,6 +63,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: hp("2%"),
     color: "#fff",
+    fontFamily: 'ibmPlexMono-bold'
   },
   iconContainer: {
     backgroundColor: "#9db4c0",
