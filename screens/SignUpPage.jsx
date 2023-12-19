@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import {
-  StyleSheet,
   View,
-  Image,
-  Text,
+  KeyboardAvoidingView,
   TextInput,
+  StyleSheet,
+  Text,
+  Platform,
+  Image,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Button,
+  Keyboard,
   Animated,
-} from "react-native";
+} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -25,19 +30,10 @@ const SignUpPage = ({ navigation }) => {
 
   const handleInputChange = (text, labelPosition, setStateFunction) => {
     // Update the input value
-    setStateFunction(text); 
+    setStateFunction(text);
 
     // Animate the label position when the user starts typing
     animateLabel(text, labelPosition);
-  };
-
-  const animateLabel = (text, labelPosition) => {
-    const newPosition = text === "" ? hp("2%") : hp("0%");
-    Animated.timing(labelPosition, {
-      toValue: newPosition,
-      duration: 250,
-      useNativeDriver: false,
-    }).start();
   };
 
   const animateNameLabelOnFocus = () => {
@@ -67,8 +63,13 @@ const SignUpPage = ({ navigation }) => {
   const animateLabelOnBlur = () => {
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const animateLabel = (text, labelPosition) => {
+    const newPosition = text === "" ? hp("2%") : hp("0%");
+    Animated.timing(labelPosition, {
+      toValue: newPosition,
+      duration: 250,
+      useNativeDriver: false,
+    }).start();
   };
 
   const handleSubmitPress = () => {
@@ -92,10 +93,11 @@ const SignUpPage = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* logo */}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}>
+
       <View style={styles.logoContainer}>
-        {/* image */}
         <Image
           source={require("../assets/image/logo.png")}
           style={styles.imageLogo}
@@ -105,219 +107,200 @@ const SignUpPage = ({ navigation }) => {
         <Text style={styles.textSign}>Sign Up</Text>
       </View>
 
-      {/* main section */}
-      <View style={styles.mainContainer}>
-        {/* NAME */}
-        <View style={styles.inputNameContainer}>
-          <Animated.Text
-            style={[
-              styles.inputLabel,
-              { top: nameLabelPosition, left: wp("3%") },
-            ]}
-          >
-            Name
-          </Animated.Text>
-          <TextInput
-            style={styles.inputName}
-            // placeholder="Name"
-            placeholderTextColor="grey"
-            value={name}
-            onFocus={() => animateNameLabelOnFocus(nameLabelPosition)}
-            onBlur={() => animateLabelOnBlur(name, nameLabelPosition)}
-            onChangeText={(text) =>
-              handleInputChange(text, nameLabelPosition, setName)
-            }
-          />
-        </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.inner}>
+          <View style={styles.mainContainer}>
 
-        {/* USERNAME */}
-        <View style={styles.inputUsernameContainer}>
-          <Animated.Text
-            style={[
-              styles.inputLabel,
-              { top: usernameLabelPosition, left: wp("3%") },
-            ]}
-          >
-            Username
-          </Animated.Text>
-          <TextInput
-            style={styles.inputUsername}
-            // placeholder="Username"
-            placeholderTextColor="grey"
-            value={username}
-            onFocus={() => animateUsernameLabelOnFocus(usernameLabelPosition)}
-            onBlur={() => animateLabelOnBlur(username, usernameLabelPosition)}
-            onChangeText={(text) =>
-              handleInputChange(text, usernameLabelPosition, setUsername)
-            }
-          />
-        </View>
 
-        {/* PASSWORD */}
-        <View style={styles.inputPasswordContainer}>
-          <Animated.Text
-            style={[
-              styles.inputLabel,
-              { top: passwordLabelPosition, left: wp("3%") },
-            ]}
-          >
-            Password
-          </Animated.Text>
-          <TextInput
-            style={styles.inputPassword}
-            // placeholder="Password"
-            placeholderTextColor="grey"
-            value={password}
-            onFocus={() => animatePasswordLabelOnFocus(passwordLabelPosition)}
-            onBlur={() => animateLabelOnBlur(password, passwordLabelPosition)}
-            onChangeText={(text) =>
-              handleInputChange(text, passwordLabelPosition,  setPassword)
-            }
-            secureTextEntry={!showPassword}
-          />
-          {/* Eye icon for toggling password visibility */}
-          <TouchableOpacity
-            style={styles.eyeIcon}
-            onPress={togglePasswordVisibility}
-          >
-            <Image
-              source={
-                showPassword
-                  ? require("../assets/image/eye-regular.png")
-                  : require("../assets/image/eye-slash-regular.png")
-              }
-              style={styles.eyeIconImage}
-            />
-          </TouchableOpacity>
-        </View>
+            <View style={styles.inputNameContainer}>
+              <Animated.Text
+                style={[
+                  styles.inputLabel,
+                  { top: nameLabelPosition, left: wp("3%") },
+                ]}
+              >
+                Name
+              </Animated.Text>
+              <TextInput
+                style={styles.inputName}
+                placeholderTextColor="grey"
+                value={name}
+                onFocus={() => animateNameLabelOnFocus(nameLabelPosition)}
+                onBlur={() => animateLabelOnBlur(name, nameLabelPosition)}
+                onChangeText={(text) =>
+                  handleInputChange(text, nameLabelPosition, setName)
+                }
+              />
+            </View>
 
-        {/* button sign in */}
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={handleSubmitPress}>
-            <Text style={styles.textSignIn}>Submit</Text>
-          </TouchableOpacity>
+            <View style={styles.inputUsernameContainer}>
+              <Animated.Text
+                style={[
+                  styles.inputLabel,
+                  { top: usernameLabelPosition, left: wp("3%") },
+                ]}
+              >
+                Username
+              </Animated.Text>
+              <TextInput
+                style={styles.textInput}
+                placeholderTextColor="grey"
+                value={username}
+                onFocus={() => animateUsernameLabelOnFocus(usernameLabelPosition)}
+                onBlur={() => animateLabelOnBlur(username, usernameLabelPosition)}
+                onChangeText={(text) =>
+                  handleInputChange(text, usernameLabelPosition, setUsername)
+                }
+              />
+            </View>
+
+            <View style={styles.inputContainerPass}>
+              <Animated.Text
+                style={[
+                  styles.inputLabel,
+                  { top: passwordLabelPosition, left: wp("3%") },
+                ]}
+              >
+                Password
+              </Animated.Text>
+              <TextInput
+                style={styles.inputPass}
+                placeholderTextColor="grey"
+                value={password}
+                onFocus={() => animatePasswordLabelOnFocus(passwordLabelPosition)}
+                onBlur={() => animateLabelOnBlur(password, passwordLabelPosition)}
+                onChangeText={(text) =>
+                  handleInputChange(text, passwordLabelPosition, setPassword)
+                }
+                secureTextEntry={!showPassword}
+              />
+            </View>
+
+
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.button} onPress={handleSubmitPress}>
+                <Text style={styles.textSignIn}>Sign in</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.textAccContainer}>
+              <Text style={styles.textAccount}>
+                Already have an account?{" "}
+                <TouchableOpacity onPress={handleLoginPress}>
+                  <Text style={styles.textSignUp}>Login!</Text>
+                </TouchableOpacity>
+              </Text>
+            </View>
+
+          </View>
+
+
+
+          {/* <Text style={styles.header}>Header</Text>
+          <TextInput placeholder="Username" style={styles.textInput} />
+          <View style={styles.btnContainer}>
+            <Button title="Submit" onPress={() => null} />
+          </View> */}
+
         </View>
-      </View>
-      {/* description */}
-      <View style={styles.textAccContainer}>
-        <Text style={styles.textAccount}>
-          Already have an account?{" "}
-          <TouchableOpacity onPress={handleLoginPress}>
-            <Text style={styles.textSignUp}>Login!</Text>
-          </TouchableOpacity>
-        </Text>
-      </View>
-    </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#253237",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#253237",
   },
   logoContainer: {
     position: "absolute",
-    top: hp("6%"),
+    top: hp("10%"),
     alignItems: "center",
-  },
-  imageLogo: {
-    width: wp("35%"),
-    height: hp("18%"),
-  },
-  mainContainer: {
-    borderTopLeftRadius: 50,
-    backgroundColor: "white",
-    width: wp("100%"),
-    height: hp("67%"),
-    position: "absolute",
-    alignItems: "center",
-    bottom: hp("0%"),
   },
   textContainer: {
     position: "absolute",
-    top: hp("25%"),
+    top: hp("27%"),
   },
   textSign: {
     fontSize: hp("6%"),
     color: "white",
     fontFamily: 'ibmPlexMono-bold'
   },
+  inner: {
+    padding: 24,
+    flex: 1,
+    justifyContent: 'space-around',
+  },
+  mainContainer: {
+    borderTopLeftRadius: 50,
+    backgroundColor: "white",
+    width: wp("100%"),
+    height: hp("67%"),
+    alignItems: "center",
+    top: hp("23%"),
+  },
+  inputLabel: {
+    position: 'absolute',
+    fontSize: hp("1.8%"),
+    color: '#5C6B73',
+    fontFamily: 'ibmPlexMono-bold',
+  },
   inputNameContainer: {
-    width: wp("75%"),
+    width: wp("80%"),
     borderWidth: 1,
     borderColor: "black",
     borderRadius: wp("3%"),
-    padding: hp("1%"),
+    padding: hp("2%"),
     top: hp("8%"),
   },
   inputName: {
     fontFamily: 'ibmPlexMono-bold',
     fontSize: hp("2%"),
     color: "black",
-    marginTop: hp("1%"), 
+    marginTop: hp("1%"),
     marginLeft: wp("1%"),
   },
   inputUsernameContainer: {
-    width: wp("75%"),
+    width: wp("80%"),
     borderWidth: 1,
     borderColor: "black",
     borderRadius: wp("3%"),
-    padding: hp("1%"),
-    top: hp("11%"),
+    padding: hp("2%"),
+    top: hp("10%"),
   },
-  inputUsername: {
+  textInput: {
     fontFamily: 'ibmPlexMono-bold',
     fontSize: hp("2%"),
     color: "black",
-    marginTop: hp("1%"),
-    marginLeft: wp("1%"),
   },
-  inputPasswordContainer: {
-    width: wp("75%"),
+  inputContainerPass: {
+    width: wp("80%"),
     borderWidth: 1,
     borderColor: "black",
     borderRadius: wp("3%"),
-    padding: hp("1%"),
-    top: hp("14%"), 
-    position: "relative",
+    padding: hp("2%"),
+    top: hp("12%"),
   },
-  inputPassword: {
+  inputPass: {
     fontFamily: 'ibmPlexMono-bold',
     fontSize: hp("2%"),
     color: "black",
-    marginTop: hp("1%"),
-    marginLeft: wp("1%"),
-  },
-  inputLabel: {
-    position: "absolute",
-    fontSize: hp("2%"),
-    fontFamily: 'ibmPlexMono-semiBold',
-    color: "#5C6B73",
-  },
-  eyeIcon: {
-    position: "absolute",
-    right: wp("3%"),
-    top: hp("2%"),
-  },
-  eyeIconImage: {
-    width: wp("8%"),
-    height: hp("3.5%"),
   },
   buttonContainer: {
     alignItems: "center",
     justifyContent: "center",
-    top: hp("18%"),
+    top: hp("15%"),
   },
   button: {
     backgroundColor: "#253237",
     width: wp("75%"),
     padding: hp("2.5%"),
-    borderTopLeftRadius: hp("3.5%"),
-    borderBottomLeftRadius: hp("3.5%"),
-    borderBottomRightRadius: hp("3.5%"),
+    borderTopLeftRadius: wp("10%"),
+    borderBottomLeftRadius: wp("10%"),
+    borderBottomRightRadius: wp("10%"),
     alignItems: "center",
     justifyContent: "center",
   },
@@ -328,11 +311,11 @@ const styles = StyleSheet.create({
   textAccContainer: {
     position: "absolute",
     width: wp("100%"),
-    bottom: hp("8%"),
+    bottom: hp("15%"),
     alignItems: "center",
   },
   textAccount: {
-    fontSize: hp("2%"),
+    fontSize: hp("1.8%"),
   },
   textSignUp: {
     fontSize: hp("2%"),
@@ -340,6 +323,8 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "600",
   },
+
 });
+
 
 export default SignUpPage;
