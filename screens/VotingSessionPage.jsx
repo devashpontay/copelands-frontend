@@ -7,6 +7,7 @@ import {
 import BackHeaderComponent from "../components/BackHeaderComponent";
 import ListOfCandidatesComponent from "../components/ListOfCandidatesComponent";
 import {
+  deleteElection,
   getAllVotesForElection,
   getOneElection,
   getVotesCount,
@@ -134,6 +135,16 @@ const VotingSessionPage = ({ navigation, route }) => {
     }
   }
 
+  async function handleOnDeletePress() {
+    try {
+      await deleteElection(election.idNo);
+      onForceUpdate();
+      navigation.goBack();
+    } catch (error) {
+      console.log("DELETE PRESS: ", error);
+    }
+  }
+
   return (
     <View
       style={{
@@ -243,7 +254,7 @@ const VotingSessionPage = ({ navigation, route }) => {
       >
         {election.sessionUser === election.moderator ? (
           votingStatus === "CLOSED" ? (
-            <TheDeleteBtnComponent />
+            <TheDeleteBtnComponent onPress={handleOnDeletePress} />
           ) : isDone ? (
             <WinnerButtonComponent getWinner={handleGetWinnerPress} />
           ) : (
