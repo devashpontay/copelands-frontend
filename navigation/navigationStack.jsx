@@ -16,6 +16,7 @@ const RootStack = createStackNavigator();
 export default function Navigator() {
   LogBox.ignoreLogs([
     "Non-serializable values were found in the navigation state",
+    "onAnimatedValueUpdate",
   ]);
   return (
     <NavigationContainer>
@@ -46,4 +47,3 @@ export default function Navigator() {
     </NavigationContainer>
   );
 }
-

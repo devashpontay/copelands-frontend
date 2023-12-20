@@ -56,17 +56,15 @@ const NewDetailsform = ({ navigation, route }) => {
       moderator: moderator.moderator,
       title,
       category,
-      status: 'OPEN',
+      status: "OPEN",
       candidateCount,
       candidates,
     };
 
     createElection(election)
-      .then((response) => {
-        console.log(response.data);
-      })
+      .then((response) => {})
       .catch((err) => {
-        console.log(err);
+        console.log("CREATE NEW VOTING SESSION: ", err);
       });
 
     // Reset the form after submission
@@ -75,7 +73,6 @@ const NewDetailsform = ({ navigation, route }) => {
     navigation.goBack();
 
     //Re render MainPage component
-
   };
 
   useEffect(() => {
@@ -105,7 +102,7 @@ const NewDetailsform = ({ navigation, route }) => {
               </Text>
             </View>
             <View style={styles.iconContainer}>
-              <TouchableOpacity onPress={() => navigation.goBack()} >
+              <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Icon name="times-circle" size={30} color="#5C6B73" />
               </TouchableOpacity>
             </View>
@@ -145,9 +142,7 @@ const NewDetailsform = ({ navigation, route }) => {
 
               <View style={styles.candidateHolder}>
                 <View style={styles.textStyleCandidate}>
-                  <Text style={styles.textCandidate}>
-                    Number of Candidates
-                  </Text>
+                  <Text style={styles.textCandidate}>Number of Candidates</Text>
                 </View>
                 <View style={styles.inputContainerCandidate}>
                   <TextInput
@@ -169,8 +164,9 @@ const NewDetailsform = ({ navigation, route }) => {
                 { length: parseInt(candidateCount, 10) || 0 },
                 (_, index) => (
                   <View key={index} style={styles.nameInputContainer}>
-                    <Text style={styles.textNames}>{`Candidate #${index + 1
-                      }`}</Text>
+                    <Text style={styles.textNames}>{`Candidate #${
+                      index + 1
+                    }`}</Text>
                     <View style={styles.inputContainerNames}>
                       <TextInput
                         style={styles.inputNames}
@@ -251,7 +247,7 @@ const styles = StyleSheet.create({
   textHeader: {
     fontSize: hp("1.8%"),
     color: "#fff",
-    fontFamily: 'ibmPlexMono-semiBold',
+    fontFamily: "ibmPlexMono-semiBold",
   },
   iconContainer: {
     marginRight: wp("4%"),

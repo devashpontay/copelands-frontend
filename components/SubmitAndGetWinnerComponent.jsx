@@ -5,13 +5,13 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const SubmitAndGetWinnerComponent = () => {
+const SubmitAndGetWinnerComponent = ({submit, getWinner}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.submitButton}>
+      <TouchableOpacity style={styles.submitButton} onPress={submit}>
         <Text style={styles.textStyleSubmit}>SUBMIT VOTE</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.winnerButton}>
+      <TouchableOpacity style={styles.winnerButton} onPress={getWinner}>
         <Text style={styles.textStyleWinner}>GET WINNER</Text>
       </TouchableOpacity>
     </View>
