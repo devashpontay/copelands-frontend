@@ -19,7 +19,8 @@ import {
 import { login } from "../services/CopelandMethodService";
 import SignUpPage from "./SignUpPage";
 
-const LoginPage = ({ navigation }) => {
+const LoginPage = ({ navigation, route }) => {
+  const { setIsSignedIn, setModerator, ...rest } = route.params;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -81,10 +82,8 @@ const LoginPage = ({ navigation }) => {
 
     login(user)
       .then((response) => {
-        response.data &&
-          navigation.navigate("MainPage", {
-            moderator: username,
-          });
+        setModerator(username);
+        setIsSignedIn(response.data);
       })
       .catch((err) => {
         console.log("USER LOGIN: ", err);
