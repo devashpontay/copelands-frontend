@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#5C6B73",
     width: wp("85%"),
     height: hp("4.5%"),
+    top: hp("5%"),
     justifyContent: "center",
     alignItems: "center",
   },

@@ -81,10 +81,10 @@ const SignUpPage = ({ navigation }) => {
 
     register(user)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("REGISTER USER: ",err);
       });
   };
 

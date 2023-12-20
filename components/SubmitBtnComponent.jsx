@@ -1,37 +1,38 @@
-import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const WinnerButtonComponent = ({getWinner}) => {
+const SubmitBtnComponent = ({ submit }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={getWinner}>
-        <Text style={styles.textStyle}>GET WINNER</Text>
+      <TouchableOpacity style={styles.submitButton} onPress={submit}>
+        <Text style={styles.textStyleSubmit}>SUBMIT VOTE</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default WinnerButtonComponent;
+export default SubmitBtnComponent;
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "#253237",
+    width: wp("80%"),
+    height: hp("10%"),
   },
-  button: {
+  submitButton: {
     backgroundColor: "#5C6B73",
-    width: wp("85%"),
+    width: wp("80%"),
     height: hp("4.5%"),
     justifyContent: "center",
     alignItems: "center",
-    top: hp("5%")
+    top: hp("5%"),
   },
-  textStyle: {
-    fontSize: hp("1.8%"),
+  textStyleSubmit: {
+    fontSize: hp("1.5%"),
     fontWeight: "600",
     color: "white",
   },

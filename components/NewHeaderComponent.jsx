@@ -28,19 +28,6 @@ const NewHeaderComponent = ({ forceUpdate, navigation, moderator }) => {
           <Icon name="plus" size={25} color="#5c6b73" />
         </View>
       </TouchableOpacity>
-
-      {/* <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <NewDetailsform
-          forceUpdate={forceUpdate}
-          closeModal={() => setModalVisible(false)}
-          moderator={moderator}
-        />
-      </Modal> */}
     </View>
   );
 };
@@ -55,7 +42,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    top: hp("4%"),
   },
   textHolder: {
     marginLeft: wp("5%"),
@@ -63,7 +49,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: hp("2%"),
     color: "#fff",
-    fontFamily: 'ibmPlexMono-bold'
+    fontFamily: "ibmPlexMono-bold",
   },
   iconContainer: {
     backgroundColor: "#9db4c0",

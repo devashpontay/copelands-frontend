@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { getWinner } from "../services/CopelandMethodService";
 
-const TheWinnerComponent = ({ winnerName }) => {
+const Item = ({ winnerName }) => {
   return (
     <View style={styles.container}>
       {/* winner display */}
@@ -16,24 +17,40 @@ const TheWinnerComponent = ({ winnerName }) => {
   );
 };
 
-const App = () => {
-  // Assuming you have a state or variable that holds the winner's name
-  const winnerName = "Buddy skyyflakes";
+const TheWinnerComponent = ({ idNo }) => {
+  const [winner, setWinner] = useState("");
+  const fetchingStatus = "Fetching...";
+
+  useEffect(() => {
+    getTheWinner();
+  }, []);
+
+  async function getTheWinner() {
+    try {
+      const response = await getWinner(idNo);
+      setWinner(response.data);
+    } catch (error) {
+      console.log("GETTING WINNER: " + error);
+    }
+  }
 
   return (
     <View>
-      {/* Other components or views if needed */}
-      <TheWinnerComponent winnerName={winnerName} />
+      {winner ? (
+        <Item winnerName={winner} />
+      ) : (
+        <Item winnerName={fetchingStatus} />
+      )}
     </View>
   );
 };
 
-export default App;
+export default TheWinnerComponent;
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "green",
-    width: wp("85%"),
+    width: wp("90%"),
     height: hp("8%"),
     justifyContent: "center",
   },

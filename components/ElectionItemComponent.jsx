@@ -6,13 +6,34 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const ElectionItemComponent = ({ navigation, user, idNo, category, title, status }) => {
-  console.log(idNo + "HAHAHAHA")
-
+const ElectionItemComponent = ({
+  navigation,
+  onForceUpdate,
+  sessionUser,
+  idNo,
+  moderator,
+  title,
+  category,
+  status,
+  candidateCount,
+  candidates,
+}) => {
   return (
     <View>
       <TouchableOpacity
-        onPress={() => navigation.navigate("VotingSessionPage", { user, idNo })}
+        onPress={() =>
+          navigation.navigate("VotingSessionPage", {
+            onForceUpdate,
+            sessionUser,
+            idNo,
+            moderator,
+            title,
+            category,
+            status,
+            candidateCount,
+            candidates,
+          })
+        }
         style={styles.boxContainer}
       >
         <View style={styles.rowContainer}>

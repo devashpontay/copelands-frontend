@@ -19,7 +19,6 @@ import {
 import { login } from "../services/CopelandMethodService";
 import SignUpPage from "./SignUpPage";
 
-
 const LoginPage = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -51,9 +50,7 @@ const LoginPage = ({ navigation }) => {
     }).start();
   };
 
-  const animateLabelOnBlur = () => {
-  };
-
+  const animateLabelOnBlur = () => {};
 
   const animateLabel = (text, labelPosition) => {
     const newPosition = text === "" ? hp("2%") : hp("0%");
@@ -77,8 +74,6 @@ const LoginPage = ({ navigation }) => {
   };
 
   const handleSignInPress = () => {
-    console.log(username, password);
-
     const user = {
       username,
       password,
@@ -92,19 +87,19 @@ const LoginPage = ({ navigation }) => {
           });
       })
       .catch((err) => {
-        console.log(err);
+        console.log("USER LOGIN: ", err);
       });
   };
 
   const handleSignUpPress = () => {
-    navigation.navigate('SignUpPage');
+    navigation.navigate("SignUpPage");
   };
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
-
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <View style={styles.logoContainer}>
         <Image
           source={require("../assets/image/logo.png")}
@@ -114,7 +109,6 @@ const LoginPage = ({ navigation }) => {
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inner}>
-
           <View style={styles.mainContainer}>
             <View style={styles.textContainer}>
               <Text style={styles.textLogin}>Login</Text>
@@ -133,8 +127,12 @@ const LoginPage = ({ navigation }) => {
                 style={styles.textInput}
                 placeholderTextColor="grey"
                 value={username}
-                onFocus={() => animateUsernameLabelOnFocus(usernameLabelPosition)}
-                onBlur={() => animateLabelOnBlur(username, usernameLabelPosition)}
+                onFocus={() =>
+                  animateUsernameLabelOnFocus(usernameLabelPosition)
+                }
+                onBlur={() =>
+                  animateLabelOnBlur(username, usernameLabelPosition)
+                }
                 onChangeText={(text) =>
                   handleInputChange(text, usernameLabelPosition, setUsername)
                 }
@@ -154,8 +152,12 @@ const LoginPage = ({ navigation }) => {
                 style={styles.inputPass}
                 placeholderTextColor="grey"
                 value={password}
-                onFocus={() => animatePasswordLabelOnFocus(passwordLabelPosition)}
-                onBlur={() => animateLabelOnBlur(password, passwordLabelPosition)}
+                onFocus={() =>
+                  animatePasswordLabelOnFocus(passwordLabelPosition)
+                }
+                onBlur={() =>
+                  animateLabelOnBlur(password, passwordLabelPosition)
+                }
                 onChangeText={(text) =>
                   handleInputChange(text, passwordLabelPosition, setPassword)
                 }
@@ -163,27 +165,28 @@ const LoginPage = ({ navigation }) => {
               />
             </View>
 
-            <View  style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={handleSignInPress}>
-                 <Text style={styles.textSignIn}>Sign in</Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleSignInPress}
+              >
+                <Text style={styles.textSignIn}>Sign in</Text>
               </TouchableOpacity>
             </View>
 
             <View style={styles.textAccContainer}>
-               <Text style={styles.textAccount}>
-                  Don't have an account?{" "}
-                  <TouchableOpacity onPress={handleSignUpPress}>
-                    <Text style={styles.textSignUp}>Sign up!</Text>
-                  </TouchableOpacity>
-                </Text>
+              <Text style={styles.textAccount}>
+                Don't have an account?{" "}
+                <TouchableOpacity onPress={handleSignUpPress}>
+                  <Text style={styles.textSignUp}>Sign up!</Text>
+                </TouchableOpacity>
+              </Text>
             </View>
 
             <View style={styles.footer}></View>
-
           </View>
         </View>
       </TouchableWithoutFeedback>
-
     </KeyboardAvoidingView>
   );
 };
@@ -216,12 +219,12 @@ const styles = StyleSheet.create({
   textLogin: {
     fontSize: hp("6%"),
     color: "black",
-    fontFamily: 'ibmPlexMono-bold',
+    fontFamily: "ibmPlexMono-bold",
   },
   inner: {
     padding: 24,
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: "space-around",
   },
   inputContainer: {
     width: wp("80%"),
@@ -232,15 +235,15 @@ const styles = StyleSheet.create({
     top: hp("10%"),
   },
   textInput: {
-    fontFamily: 'ibmPlexMono-bold',
+    fontFamily: "ibmPlexMono-bold",
     fontSize: hp("2%"),
     color: "black",
   },
   inputLabel: {
-    position: 'absolute',
+    position: "absolute",
     fontSize: hp("1.8%"),
-    color: '#5C6B73',
-    fontFamily: 'ibmPlexMono-bold',
+    color: "#5C6B73",
+    fontFamily: "ibmPlexMono-bold",
   },
   inputContainerPass: {
     width: wp("80%"),
@@ -251,7 +254,7 @@ const styles = StyleSheet.create({
     top: hp("12%"),
   },
   inputPass: {
-    fontFamily: 'ibmPlexMono-bold',
+    fontFamily: "ibmPlexMono-bold",
     fontSize: hp("2%"),
     color: "black",
   },

@@ -1,64 +1,92 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+  RefreshControl,
+} from "react-native";
 import NewHeaderComponent from "../components/NewHeaderComponent";
 import ElectionItemComponent from "../components/ElectionItemComponent";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { getAllElectionsByModerator } from "../services/CopelandMethodService";
-
+import {
+  GestureHandlerRootView,
+  ScrollView,
+} from "react-native-gesture-handler";
+import {
+  getAllElectionsByModerator,
+  getAllElectionsFromAllUsers,
+} from "../services/CopelandMethodService";
 
 const MainPage = ({ navigation, route }) => {
   const [moderator, setModerator] = useState(route.params);
   const [elections, setElections] = useState([]);
-  // const [reRender, setReRender] = useState(0);
+  const [isFetching, setIsFetching] = useState(false);
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
-
-  console.log(moderator.moderator);
 
   useEffect(() => {
     getItems();
   }, [reducerValue]);
 
   const getItems = async () => {
-    getAllElectionsByModerator(moderator.moderator)
+    getAllElectionsFromAllUsers()
       .then((response) => {
         setElections(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("GET ALL ELECTIONS FROM ALL USERS", error);
       });
   };
 
-
+  function handleOnRefresh() {
+    setIsFetching(true);
+    getItems();
+    setIsFetching(false);
+  }
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#253237" }}>
+    <View style={{ flex: 1, backgroundColor: "#253237", paddingTop: 45 }}>
       {/* Header section */}
-      <NewHeaderComponent forceUpdate={forceUpdate} moderator={moderator.moderator} navigation={navigation}/>
+      <NewHeaderComponent
+        forceUpdate={forceUpdate}
+        moderator={moderator.moderator}
+        navigation={navigation}
+      />
 
       {/* Election items section */}
       <GestureHandlerRootView style={styles.GHRW_container}>
-        <FlatList
-          data={elections}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-              console.log("Selected election item (mainpage):", item);
-              console.log("Candidate Names:", item.candidates);
-              navigation.navigate("VotingSessionPage", { candidateNames: item.candidates || [] });
-            }}
-            >
+        {elections.length === 0 ? (
+          <ScrollView
+            style={{ width: "100%" }}
+            refreshControl={
+              <RefreshControl
+                refreshing={isFetching}
+                onRefresh={handleOnRefresh}
+              />
+            }
+          ></ScrollView>
+        ) : (
+          <FlatList
+            data={elections}
+            onRefresh={handleOnRefresh}
+            refreshing={isFetching}
+            renderItem={({ item }) => (
               <ElectionItemComponent
                 navigation={navigation}
-                user={moderator.moderator}
+                onForceUpdate={forceUpdate}
+                sessionUser={moderator.moderator}
                 idNo={item.idNo}
-                category={item.category}
+                moderator={item.moderator}
                 title={item.title}
+                category={item.category}
                 status={item.status}
+                candidateCount={item.candidateCount}
+                candidates={item.candidates}
               />
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item.idNo}
-        />
+            )}
+            keyExtractor={(item) => item.idNo}
+          />
+        )}
       </GestureHandlerRootView>
     </View>
   );
@@ -69,9 +97,8 @@ export default MainPage;
 const styles = StyleSheet.create({
   GHRW_container: {
     flex: 1,
-    marginTop: "15%",
+    marginTop: "5%",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 15,
   },
 });
