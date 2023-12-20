@@ -31,3 +31,4 @@ export const markAsClosed = (idNo) =>
   axios.patch(`${BASE_URL_ELECTION}/${idNo}/close`);
 export const getAllVotesForElection = idNo => axios.get(BASE_URL_ELECTION + '/' + idNo + '/' + 'votes');
 export const getVotesCount = idNo => axios.get(`${BASE_URL_ELECTION}/${idNo}/votes/count`)
+export const deleteElection = idNo => axios.delete(`${BASE_URL_ELECTION}/${idNo}`)
