@@ -5,7 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const TheDeleteBtnComponent = ({navigation, onPress, onForceUpdate}) => {
+const TheDeleteBtnComponent = ({ onPress }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={onPress}>

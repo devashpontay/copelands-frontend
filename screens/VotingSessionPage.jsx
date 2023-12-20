@@ -254,7 +254,7 @@ const VotingSessionPage = ({ navigation, route }) => {
       >
         {election.sessionUser === election.moderator ? (
           votingStatus === "CLOSED" ? (
-            <TheDeleteBtnComponent onPress={handleOnDeletePress}/>
+            <TheDeleteBtnComponent onPress={handleOnDeletePress} />
           ) : isDone ? (
             <WinnerButtonComponent getWinner={handleGetWinnerPress} />
           ) : (
