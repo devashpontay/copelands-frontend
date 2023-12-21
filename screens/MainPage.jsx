@@ -49,7 +49,7 @@ const MainPage = ({ navigation, route }) => {
       {/* Header section */}
       <NewHeaderComponent
         forceUpdate={forceUpdate}
-        moderator={moderator.moderator}
+        moderator={moderator}
         navigation={navigation}
       />
 
@@ -74,7 +74,7 @@ const MainPage = ({ navigation, route }) => {
               <ElectionItemComponent
                 navigation={navigation}
                 onForceUpdate={forceUpdate}
-                sessionUser={moderator.moderator}
+                sessionUser={moderator}
                 idNo={item.idNo}
                 moderator={item.moderator}
                 title={item.title}
