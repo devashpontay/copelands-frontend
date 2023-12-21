@@ -23,8 +23,6 @@ import SignUpPage from "./SignUpPage";
 
 const {height, width} = Dimensions.get('window');
 
-const LoginPage = ({ navigation }) => {
-
 const LoginPage = ({ navigation, route }) => {
   const { setIsSignedIn, setModerator, ...rest } = route.params;
 
