@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Dimensions,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -19,8 +20,14 @@ import {
 import { login } from "../services/CopelandMethodService";
 import SignUpPage from "./SignUpPage";
 
+
+const {height, width} = Dimensions.get('window');
+
+const LoginPage = ({ navigation }) => {
+
 const LoginPage = ({ navigation, route }) => {
   const { setIsSignedIn, setModerator, ...rest } = route.params;
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -51,7 +58,7 @@ const LoginPage = ({ navigation, route }) => {
     }).start();
   };
 
-  const animateLabelOnBlur = () => {};
+  const animateLabelOnBlur = () => { };
 
   const animateLabel = (text, labelPosition) => {
     const newPosition = text === "" ? hp("2%") : hp("0%");
@@ -93,150 +100,204 @@ const LoginPage = ({ navigation, route }) => {
   const handleSignUpPress = () => {
     navigation.navigate("SignUpPage");
   };
-
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <View style={styles.logoContainer}>
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}>
+      <View style={{
+        paddingTop: hp("8%"),
+      }}>
         <Image
           source={require("../assets/image/logo.png")}
           style={styles.imageLogo}
         />
       </View>
-
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inner}>
-          <View style={styles.mainContainer}>
-            <View style={styles.textContainer}>
+
+          <View style={{
+            marginTop: hp("4%"),
+            width: wp("100%"),
+            height: hp("75%"),
+            borderTopLeftRadius: hp("6%"),
+            backgroundColor: "white",
+            alignItems: "center",
+          }}>
+
+            <View style={{
+              flex: 1,
+              padding: hp("2%"),
+              width: wp("100%"),
+              alignItems: "center",
+              marginTop: hp("2%"),
+              // backgroundColor: 'yellow',
+            }}>
               <Text style={styles.textLogin}>Login</Text>
             </View>
 
-            <View style={styles.inputContainer}>
-              <Animated.Text
-                style={[
-                  styles.inputLabel,
-                  { top: usernameLabelPosition, left: wp("3%") },
-                ]}
-              >
-                Username
-              </Animated.Text>
-              <TextInput
-                style={styles.textInput}
-                placeholderTextColor="grey"
-                value={username}
-                onFocus={() =>
-                  animateUsernameLabelOnFocus(usernameLabelPosition)
-                }
-                onBlur={() =>
-                  animateLabelOnBlur(username, usernameLabelPosition)
-                }
-                onChangeText={(text) =>
-                  handleInputChange(text, usernameLabelPosition, setUsername)
-                }
-              />
+            <View style={{
+              flex: 1,
+              width: wp("100%"),
+              alignItems: "center",
+              paddingTop: hp("2%"),
+              paddingBottom: hp("1%"),
+              // backgroundColor: "red",
+            }}>
+              <View style={{
+                width: wp("80%"),
+                borderWidth: 1,
+                borderColor: "black",
+                borderRadius: wp("3%"),
+                padding: hp("2%"),
+              }}>
+                <Animated.Text
+                  style={[
+                    styles.inputLabel,
+                    { top: usernameLabelPosition, left: wp("3%") },
+                  ]}
+                >
+                  Username
+                </Animated.Text>
+                <TextInput
+                  style={{
+                    fontFamily: "ibmPlexMono-bold",
+                    fontSize: hp("2%"),
+                    color: "black",
+                  }}
+                  placeholderTextColor="grey"
+                  value={username}
+                  onFocus={() =>
+                    animateUsernameLabelOnFocus(usernameLabelPosition)
+                  }
+                  onBlur={() =>
+                    animateLabelOnBlur(username, usernameLabelPosition)
+                  }
+                  onChangeText={(text) =>
+                    handleInputChange(text, usernameLabelPosition, setUsername)
+                  }
+                />
+              </View>
             </View>
 
-            <View style={styles.inputContainerPass}>
-              <Animated.Text
-                style={[
-                  styles.inputLabel,
-                  { top: passwordLabelPosition, left: wp("3%") },
-                ]}
-              >
-                Password
-              </Animated.Text>
-              <TextInput
-                style={styles.inputPass}
-                placeholderTextColor="grey"
-                value={password}
-                onFocus={() =>
-                  animatePasswordLabelOnFocus(passwordLabelPosition)
-                }
-                onBlur={() =>
-                  animateLabelOnBlur(password, passwordLabelPosition)
-                }
-                onChangeText={(text) =>
-                  handleInputChange(text, passwordLabelPosition, setPassword)
-                }
-                secureTextEntry={!showPassword}
-              />
+
+            <View style={{
+              flex: 1,
+              width: wp("100%"),
+              alignItems: "center",
+            }}>
+              <View style={{
+                width: wp("80%"),
+                borderWidth: 1,
+                borderColor: "black",
+                borderRadius: wp("3%"),
+                padding: hp("2%"),
+              }}>
+                <Animated.Text
+                  style={[
+                    styles.inputLabel,
+                    { top: passwordLabelPosition, left: wp("3%") },
+                  ]}
+                >
+                  Password
+                </Animated.Text>
+                <TextInput
+                  style={{
+                    fontFamily: "ibmPlexMono-bold",
+                    fontSize: hp("2%"),
+                    color: "black",
+                  }}
+                  placeholderTextColor="grey"
+                  value={password}
+                  onFocus={() =>
+                    animatePasswordLabelOnFocus(passwordLabelPosition)
+                  }
+                  onBlur={() =>
+                    animateLabelOnBlur(password, passwordLabelPosition)
+                  }
+                  onChangeText={(text) =>
+                    handleInputChange(text, passwordLabelPosition, setPassword)
+                  }
+                  secureTextEntry={!showPassword}
+                />
+              </View>
             </View>
 
-            <View style={styles.buttonContainer}>
+
+            <View style={{
+              flex: 1,
+              width: wp("100%"),
+              padding: hp("4%"),
+              alignItems: "center",
+              justifyContent: "center",
+              // backgroundColor: 'lime',
+            }}>
               <TouchableOpacity
-                style={styles.button}
+                style={{
+                  flex: 1,
+                  backgroundColor: "#253237",
+                  width: wp("75%"),
+                  padding: hp("2%"),
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderTopLeftRadius: wp("10%"),
+                  borderBottomRightRadius: wp("10%"),
+                  borderBottomLeftRadius: wp("10%"),
+                }}
                 onPress={handleSignInPress}
               >
-                <Text style={styles.textSignIn}>Sign in</Text>
+                <Text style={{
+                  fontWeight: "600",
+                  color: "white",
+                }}>Sign in</Text>
               </TouchableOpacity>
             </View>
 
-            <View style={styles.textAccContainer}>
-              <Text style={styles.textAccount}>
+            <View style={{
+              flex: 1,
+              padding: hp("4%"),
+              width: wp("100%"),
+              alignItems: "center",
+              justifyContent: "center",
+              // backgroundColor: 'tomato',
+            }}>
+              <Text style={{
+                fontSize: hp("1.8%"),
+              }}>
                 Don't have an account?{" "}
                 <TouchableOpacity onPress={handleSignUpPress}>
-                  <Text style={styles.textSignUp}>Sign up!</Text>
+                  <Text style={{
+                    fontSize: hp("2%"),
+                    textDecorationLine: "underline",
+                    color: "black",
+                    fontWeight: "600",
+                  }}>Sign up!</Text>
                 </TouchableOpacity>
               </Text>
             </View>
 
             <View style={styles.footer}></View>
           </View>
+
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };
 
-export default LoginPage;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#253237",
   },
-  logoContainer: {
-    position: "absolute",
-    top: hp("10%"),
-    alignItems: "center",
-  },
-  mainContainer: {
-    borderTopLeftRadius: 50,
-    backgroundColor: "white",
-    width: wp("100%"),
-    height: hp("68%"),
-    alignItems: "center",
-    top: 150,
-  },
-  textContainer: {
-    top: hp("5%"),
+  inner: {
+    flex: 1,
+    justifyContent: 'space-around',
   },
   textLogin: {
     fontSize: hp("6%"),
     color: "black",
     fontFamily: "ibmPlexMono-bold",
-  },
-  inner: {
-    padding: 24,
-    flex: 1,
-    justifyContent: "space-around",
-  },
-  inputContainer: {
-    width: wp("80%"),
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: wp("3%"),
-    padding: hp("2%"),
-    top: hp("10%"),
-  },
-  textInput: {
-    fontFamily: "ibmPlexMono-bold",
-    fontSize: hp("2%"),
-    color: "black",
   },
   inputLabel: {
     position: "absolute",
@@ -244,59 +305,12 @@ const styles = StyleSheet.create({
     color: "#5C6B73",
     fontFamily: "ibmPlexMono-bold",
   },
-  inputContainerPass: {
-    width: wp("80%"),
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: wp("3%"),
-    padding: hp("2%"),
-    top: hp("12%"),
-  },
-  inputPass: {
-    fontFamily: "ibmPlexMono-bold",
-    fontSize: hp("2%"),
-    color: "black",
-  },
-  buttonContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    top: hp("16%"),
-  },
-  button: {
-    backgroundColor: "#253237",
-    width: wp("75%"),
-    padding: hp("2.5%"),
-    borderTopLeftRadius: wp("10%"),
-    borderBottomLeftRadius: wp("10%"),
-    borderBottomRightRadius: wp("10%"),
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textSignIn: {
-    fontWeight: "600",
-    color: "white",
-  },
-  textAccContainer: {
-    position: "absolute",
-    width: wp("100%"),
-    bottom: hp("15%"),
-    alignItems: "center",
-  },
-  textAccount: {
-    fontSize: hp("1.8%"),
-  },
-  textSignUp: {
-    fontSize: hp("2%"),
-    textDecorationLine: "underline",
-    color: "black",
-    fontWeight: "600",
-  },
   footer: {
+    flex: 1,
     backgroundColor: "black",
-    width: "100%",
-    height: hp("6.5%"),
-    position: "absolute",
+    width: wp("100%"),
     alignItems: "center",
-    top: hp("61%"),
   },
 });
+
+export default LoginPage;
