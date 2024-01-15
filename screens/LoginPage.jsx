@@ -21,7 +21,7 @@ import { login } from "../services/CopelandMethodService";
 import SignUpPage from "./SignUpPage";
 
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const LoginPage = ({ navigation, route }) => {
   const { setIsSignedIn, setModerator, ...rest } = route.params;
@@ -31,6 +31,7 @@ const LoginPage = ({ navigation, route }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [usernameLabelPosition] = useState(new Animated.Value(hp("2%")));
   const [passwordLabelPosition] = useState(new Animated.Value(hp("2%")));
+  const [error, setError] = useState("");
 
   const handleInputChange = (text, labelPosition, setStateFunction) => {
     // Update the input value
@@ -79,6 +80,24 @@ const LoginPage = ({ navigation, route }) => {
     setShowPassword(!showPassword);
   };
 
+  // const handleSignInPress = () => {
+  //   const user = {
+  //     username,
+  //     password,
+  //   };
+
+  //   login(user)
+  //     .then((response) => {
+  //       setModerator(username);
+  //       setIsSignedIn(response.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log("USER LOGIN: ", err);
+  //       setError("Incorrect username or password");
+
+  //     });
+  // };
+
   const handleSignInPress = () => {
     const user = {
       username,
@@ -87,13 +106,23 @@ const LoginPage = ({ navigation, route }) => {
 
     login(user)
       .then((response) => {
-        setModerator(username);
-        setIsSignedIn(response.data);
+        // Check if the response indicates a successful login
+        if (response.data) {
+          setModerator(username);
+          setIsSignedIn(response.data);
+          setError(""); // Clear any previous error message
+        } else {
+          // Display a general error message for login-related issues
+          setError("Incorrect username or password");
+        }
       })
       .catch((err) => {
+        // Display a general error message for login-related issues
+        setError("Incorrect username or password");
         console.log("USER LOGIN: ", err);
       });
   };
+
 
   const handleSignUpPress = () => {
     navigation.navigate("SignUpPage");
@@ -177,7 +206,6 @@ const LoginPage = ({ navigation, route }) => {
               </View>
             </View>
 
-
             <View style={{
               flex: 1,
               width: wp("100%"),
@@ -220,7 +248,6 @@ const LoginPage = ({ navigation, route }) => {
               </View>
             </View>
 
-
             <View style={{
               flex: 1,
               width: wp("100%"),
@@ -231,15 +258,16 @@ const LoginPage = ({ navigation, route }) => {
             }}>
               <TouchableOpacity
                 style={{
-                  flex: 1,
+                  // flex: 1,
                   backgroundColor: "#253237",
-                  width: wp("75%"),
-                  padding: hp("2%"),
+                  width: wp("80%"),
+                  padding: hp("2.5%"),
                   alignItems: "center",
                   justifyContent: "center",
                   borderTopLeftRadius: wp("10%"),
-                  borderBottomRightRadius: wp("10%"),
+                  borderBottomRightRadius: wp("9%"),
                   borderBottomLeftRadius: wp("10%"),
+                  marginBottom: wp("1%"),
                 }}
                 onPress={handleSignInPress}
               >
@@ -248,7 +276,25 @@ const LoginPage = ({ navigation, route }) => {
                   color: "white",
                 }}>Sign in</Text>
               </TouchableOpacity>
+
+              {/* Display error message */}
+              {error !== "" && (
+                <Text style={{ color: "red", marginTop: hp("1%") }}>{error}</Text>
+              )}
+
             </View>
+
+            {/* Display error message */}
+            {/* {error !== "" && (
+              <View style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: 'lime',
+              }}>
+                <Text style={{ color: "red", marginTop: hp("1%") }}>{error}</Text>
+              </View>
+            )} */}
 
             <View style={{
               flex: 1,
@@ -256,7 +302,7 @@ const LoginPage = ({ navigation, route }) => {
               width: wp("100%"),
               alignItems: "center",
               justifyContent: "center",
-              // backgroundColor: 'tomato',
+              // backgroundColor: 'red',
             }}>
               <Text style={{
                 fontSize: hp("1.8%"),

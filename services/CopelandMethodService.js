@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const BASE_URL_ELECTION = "http://192.168.254.154:8080/api/v1/elections";
-const BASE_URL_BALLOT = "http://192.168.254.154:8080/api/v1/ballots";
-const AUTH_URL = "http://192.168.254.154:8080/api/v1/auth";
+const BASE_URL_ELECTION = "http://192.168.101.71:8080/api/v1/elections";
+const BASE_URL_BALLOT = "http://192.168.101.71:8080/api/v1/ballots";
+const AUTH_URL = "http://192.168.101.71:8080/api/v1/auth";
 
 // METHODS FOR REQUESTING DATA FROM OUR API
 

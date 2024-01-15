@@ -34,9 +34,45 @@ const ElectionItemComponent = ({
             candidates,
           })
         }
-        style={styles.boxContainer}
+        style={{
+          backgroundColor: "#E0FBFC",
+          width: wp("90%"),
+          flex: 1,
+          marginBottom: hp("1.5%"),
+          borderRadius: wp("2%"),
+        }}
       >
-        <View style={styles.rowContainer}>
+        {/* container*/}
+        <View style={{
+          flexDirection: "row",
+          height: hp("5%"),
+          alignItems: "center",
+          // backgroundColor: 'blue',
+
+        }}>
+          {/* first colum */}
+          <View style={{
+            flex: 1,
+            marginLeft: wp("4%"),
+            paddingRight: wp("2.5%"),
+            justifyContent: 'center',
+          }}>
+            <Text style={styles.textPlace}>{category}</Text>
+          </View>
+
+
+          {/* second column */}
+          <View style={{
+            flexDirection: "row",
+            marginRight: wp("4%"),
+            width: wp("15%"),
+          }}>
+            <Icon name="circle" size={hp("2%")} color="green" />
+            <Text style={styles.openText}> {status}</Text>
+          </View>
+
+        </View>
+        {/* <View style={styles.rowContainer}>
           <View style={styles.placeContainer}>
             <Text style={styles.textPlace}>{category}</Text>
             <View style={styles.iconContainer}>
@@ -44,13 +80,21 @@ const ElectionItemComponent = ({
             </View>
             <Text style={styles.openText}> {status}</Text>
           </View>
-        </View>
+        </View> */}
 
-        <View>
+        <View style={{
+          flex: 1,
+          padding: wp("2%"),
+          paddingLeft: wp("4%"),
+          justifyContent: 'center',
+        }}>
           <Text style={styles.textStyle}>{title}</Text>
         </View>
 
-        <View style={styles.timeContainer}>
+        <View style={{
+          flex: 1,
+          paddingLeft: wp("4%"),
+        }}>
           <Text style={styles.timeStyle}>Started - XXXXXXXX</Text>
         </View>
       </TouchableOpacity>
@@ -67,31 +111,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "blue",
   },
-  boxContainer: {
-    backgroundColor: "#E0FBFC",
-    padding: wp("4%"),
-    width: wp("90%"),
-    minHeight: hp("15%"),
-    alignItems: "flex-start",
-    justifyContent: "center",
-    borderWidth: 1,
-    borderRadius: wp("2%"),
-    borderColor: "#5C6B73",
-    marginBottom: hp("2%"),
-  },
-  rowContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    bottom: hp("2%"),
-  },
+  // boxContainer: {
+  //   backgroundColor: "#E0FBFC",
+  //   padding: wp("4%"),
+  //   width: wp("90%"),
+  //   minHeight: hp("15%"),
+  //   alignItems: "flex-start",
+  //   justifyContent: "center",
+  //   borderWidth: 1,
+  //   borderRadius: wp("2%"),
+  //   borderColor: "#5C6B73",
+  //   marginBottom: hp("2%"),
+  // },
+  // rowContainer: {
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   bottom: hp("2%"),
+  // },
   textStyle: {
     fontSize: hp("2.5%"),
-    marginBottom: hp("1%"),
   },
-  placeContainer: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-  },
+  // placeContainer: {
+  //   flexDirection: "row",
+  //   alignItems: "flex-start",
+  // },
   textPlace: {
     fontSize: hp("1.8%"),
     color: "#CCCCCC",
@@ -100,12 +143,6 @@ const styles = StyleSheet.create({
     fontSize: hp("1.5%"),
     color: "#CCCCCC",
     marginLeft: wp("0.5%"),
-  },
-  iconContainer: {
-    marginLeft: wp("55%"),
-  },
-  timeContainer: {
-    top: hp("1.5%"),
   },
   timeStyle: {
     fontSize: hp("1.5%"),
