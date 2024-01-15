@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  Animated,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {
@@ -20,9 +21,8 @@ const NewDetailsform = ({ navigation, route }) => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [candidateCount, setcandidateCount] = useState("");
-  const [candidates, setCandidates] = useState(
-    Array.from({ length: 0 }, () => "")
-  );
+  const [candidates, setCandidates] = useState(Array.from({ length: 0 }, () => ""));
+  const [opacity] = useState(new Animated.Value(1));
   const [isFormValid, setIsFormValid] = useState(false);
 
   const resetInputs = () => {
@@ -62,7 +62,7 @@ const NewDetailsform = ({ navigation, route }) => {
     };
 
     createElection(election)
-      .then((response) => {})
+      .then((response) => { })
       .catch((err) => {
         console.log("CREATE NEW VOTING SESSION: ", err);
       });
@@ -75,6 +75,26 @@ const NewDetailsform = ({ navigation, route }) => {
     //Re render MainPage component
   };
 
+  const handlePressIn = () => {
+    if (!isFormValid) {
+      Animated.timing(opacity, {
+        toValue: 0.8,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    }
+  };
+  
+  const handlePressOut = () => {
+    if (!isFormValid) {
+      Animated.timing(opacity, {
+        toValue: 5,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    }
+  };
+  
   useEffect(() => {
     const isValid =
       title.trim() !== "" &&
@@ -83,35 +103,64 @@ const NewDetailsform = ({ navigation, route }) => {
       candidates.every((candidate) => candidate.trim() !== "");
 
     setIsFormValid(isValid);
+
+    Animated.timing(opacity, {
+      toValue: isValid ? 1 : 0.5,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
   }, [title, category, candidateCount, candidates]);
 
   return (
     <View style={styles.container}>
-      {/* <Modal
-        animationType="slide"
-        transparent={true}
-        visible={true}
-        onRequestClose={closeModal}
-      > */}
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <View style={styles.headerMainContainer}>
-            <View style={styles.headerInnerContainer}>
-              <Text style={styles.textHeader}>
-                Fill out voting details form
-              </Text>
+          {/* header */}
+          <View style={{
+          }}>
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: wp("2%"),
+              borderBottomWidth: 2,
+            }}>
+              <View style={{
+                flex: 1,
+              }}>
+                <Text style={{
+                  fontSize: hp("1.9%"),
+                  color: "#fff",
+                  fontFamily: "ibmPlexMono-semiBold",
+                  paddingLeft: wp("2%"),
+                }}>
+                  Fill out voting details form
+                </Text>
+              </View>
+              <View style={{
+                paddingRight: wp("2%"),
+              }}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Icon name="times-circle" size={30} color="#5C6B73" />
+                </TouchableOpacity>
+              </View>
             </View>
-            <View style={styles.iconContainer}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Icon name="times-circle" size={30} color="#5C6B73" />
-              </TouchableOpacity>
-            </View>
+
           </View>
 
           <ScrollView contentContainerStyle={styles.scrollContainer}>
+            {/* fill-up form */}
             <View style={styles.fillUpContainer}>
-              <View style={styles.titleHolder}>
-                <View style={styles.textStyleTitle}>
+
+              <View style={{
+                flex: 1,
+                padding: wp("5%"),
+                // backgroundColor: 'tomato',
+              }}>
+                <View style={{
+                  color: "white",
+                  fontSize: hp("2.5%"),
+                }}>
                   <Text style={styles.textTitle}>Title</Text>
                 </View>
                 <View style={styles.inputContainerTitle}>
@@ -125,9 +174,16 @@ const NewDetailsform = ({ navigation, route }) => {
                 </View>
               </View>
 
-              <View style={styles.categoryHolder}>
-                <View style={styles.textStyleCategory}>
-                  <Text style={styles.textCategory}>Category</Text>
+              <View style={{
+                flex: 1,
+                padding: wp("5%"),
+                // backgroundColor: 'green',
+              }}>
+                <View style={{
+                  color: "white",
+                  fontSize: hp("2.5%"),
+                }}>
+                  <Text style={styles.textTitle}>Category</Text>
                 </View>
                 <View style={styles.inputContainerCategory}>
                   <TextInput
@@ -140,9 +196,16 @@ const NewDetailsform = ({ navigation, route }) => {
                 </View>
               </View>
 
-              <View style={styles.candidateHolder}>
-                <View style={styles.textStyleCandidate}>
-                  <Text style={styles.textCandidate}>Number of Candidates</Text>
+              <View style={{
+                flex: 1,
+                padding: wp("5%"),
+                // backgroundColor: 'yellow',
+              }}>
+                <View style={{
+                  color: "white",
+                  fontSize: hp("2.5%"),
+                }}>
+                  <Text style={styles.textTitle}>Number of Candidates</Text>
                 </View>
                 <View style={styles.inputContainerCandidate}>
                   <TextInput
@@ -156,17 +219,29 @@ const NewDetailsform = ({ navigation, route }) => {
                 </View>
               </View>
 
-              <View style={styles.lineDivider}></View>
-            </View>
+              <View style={{
+                // flex: 1,
+                alignItems: 'center',
+                backgroundColor: 'black',
+                margin: wp("6%"),
+                height: hp("0.2%"),
+              }}>
+              </View>
 
-            <View style={styles.namesContainer}>
+            </View>
+            {/* end of fill-up form */}
+
+            <View style={{
+              flex: 1,
+              padding: wp("2%"),
+              marginBottom: hp("5%"),
+            }}>
               {Array.from(
                 { length: parseInt(candidateCount, 10) || 0 },
                 (_, index) => (
                   <View key={index} style={styles.nameInputContainer}>
-                    <Text style={styles.textNames}>{`Candidate #${
-                      index + 1
-                    }`}</Text>
+                    <Text style={styles.textNames}>{`Candidate #${index + 1
+                      }`}</Text>
                     <View style={styles.inputContainerNames}>
                       <TextInput
                         style={styles.inputNames}
@@ -184,27 +259,31 @@ const NewDetailsform = ({ navigation, route }) => {
             </View>
           </ScrollView>
 
-          <View style={styles.btnContainer}>
+          <View style={{
+            padding: wp('5%'),
+            justifyContent: 'center',
+          }}>
             <TouchableOpacity
               style={[
                 styles.submitButton,
-                isFormValid
-                  ? styles.activeSubmitButton
-                  : styles.disabledSubmitButton,
+                isFormValid ? styles.activeSubmitButton : styles.disabledSubmitButton,
               ]}
               onPress={handleSubmission}
               disabled={!isFormValid}
+              onPressIn={handlePressIn}
+              onPressOut={handlePressOut}
             >
-              <Text
-                style={[
+              <Animated.View style={[styles.buttonContainer, { opacity }]}>
+                <Text style={[
                   styles.submitButtonText,
-                  { color: isFormValid ? "white" : "#5c6b73" },
-                ]}
-              >
-                SUBMIT VOTE
-              </Text>
+                  { color: isFormValid ? 'white' : 'white' },
+                ]}>
+                  SUBMIT VOTE
+                </Text>
+              </Animated.View>
             </TouchableOpacity>
           </View>
+
         </View>
       </View>
 
@@ -241,33 +320,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     borderBottomWidth: 2,
   },
-  headerInnerContainer: {
-    marginLeft: wp("5%"),
-  },
-  textHeader: {
-    fontSize: hp("1.8%"),
-    color: "#fff",
-    fontFamily: "ibmPlexMono-semiBold",
-  },
-  iconContainer: {
-    marginRight: wp("4%"),
-  },
   scrollContainer: {
     flexGrow: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
   fillUpContainer: {
-    height: hp("35%"),
-    width: wp("90%"),
-    bottom: hp("15%"),
   },
   titleHolder: {
     marginTop: wp("6%"),
     marginLeft: wp("5%"),
     marginRight: wp("6%"),
   },
-  textStyleTitle: {},
   textTitle: {
     color: "white",
     fontSize: hp("2.5%"),
@@ -326,19 +388,6 @@ const styles = StyleSheet.create({
     fontSize: hp("2%"),
     color: "white",
   },
-  lineDivider: {
-    backgroundColor: "black",
-    marginTop: wp("8%"),
-    marginLeft: wp("10%"),
-    marginRight: wp("6%"),
-    width: wp("70%"),
-    height: hp("0.3%"),
-    justifyContent: "center",
-  },
-  namesContainer: {
-    bottom: hp("18%"),
-    width: wp("90%"),
-  },
   textNames: {
     marginLeft: wp("5%"),
     color: "white",
@@ -388,5 +437,10 @@ const styles = StyleSheet.create({
     // color: 'red',
     fontSize: hp("2%"),
     textAlign: "center",
+  },
+  submitButton: {
+    backgroundColor: "#007BFF",
+    padding: 10,
+    borderRadius: 5,
   },
 });

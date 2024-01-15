@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#9DB4C0",
+    color: "white",
     marginLeft: 2.5,
   },
   iconBack: {
