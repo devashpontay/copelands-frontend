@@ -13,14 +13,15 @@ import {
   Keyboard,
   Animated,
   Dimensions,
-} from 'react-native';
+  Alert,
+} from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { register } from "../services/CopelandMethodService";
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 const SignUpPage = ({ navigation }) => {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -62,8 +63,7 @@ const SignUpPage = ({ navigation }) => {
     }).start();
   };
 
-  const animateLabelOnBlur = () => {
-  };
+  const animateLabelOnBlur = () => {};
 
   const animateLabel = (text, labelPosition) => {
     const newPosition = text === "" ? hp("2%") : hp("0%");
@@ -81,12 +81,50 @@ const SignUpPage = ({ navigation }) => {
       password,
     };
 
+    if (!user.name || !user.username || !user.password) {
+      Alert.alert(
+        "WARNING!",
+        "Please fill in all the required fields.",
+        [
+          {
+            text: "OK",
+          },
+        ],
+        { cancelable: false }
+      );
+
+      return;
+    }
+
     register(user)
       .then((response) => {
-        // console.log(response.data);
+        Alert.alert(
+          "Registration Successful",
+          "Your account has been successfully registered!",
+          [
+            {
+              text: "LOGIN",
+              onPress: handleLoginPress,
+            },
+            {
+              text: "ClOSE",
+            },
+          ],
+          { cancelable: false }
+        );
       })
       .catch((err) => {
         console.log("REGISTER USER: ", err);
+        Alert.alert(
+          "Registration Failed",
+          "\nUsername is already registered. Please choose a different username.",
+          [
+            {
+              text: "OK",
+            },
+          ],
+          { cancelable: false }
+        );
       });
   };
 
@@ -96,66 +134,81 @@ const SignUpPage = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{
         flex: 1,
         backgroundColor: "#253237",
-      }}>
-      <View style={{
-        // flex: 1,
-        paddingTop: hp("8%"),
-        alignItems: "center",
-
-      }}>
+      }}
+    >
+      <View
+        style={{
+          // flex: 1,
+          paddingTop: hp("8%"),
+          alignItems: "center",
+        }}
+      >
         <Image
           source={require("../assets/image/logo.png")}
           style={styles.imageLogo}
         />
       </View>
 
-      <View style={{
-        // backgroundColor: 'red',
-        paddingTop: hp("2%"),
-        paddingBottom: hp("5.5%"),
-        alignItems: "center",
-        // justifyContent:'center',
-      }}>
-        <Text style={{
-          fontSize: hp("6%"),
-          color: "white",
-          fontFamily: 'ibmPlexMono-bold'
-        }}>Sign Up</Text>
+      <View
+        style={{
+          // backgroundColor: 'red',
+          paddingTop: hp("2%"),
+          paddingBottom: hp("5.5%"),
+          alignItems: "center",
+          // justifyContent:'center',
+        }}
+      >
+        <Text
+          style={{
+            fontSize: hp("6%"),
+            color: "white",
+            fontFamily: "ibmPlexMono-bold",
+          }}
+        >
+          Sign Up
+        </Text>
       </View>
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{
-          flex: 1,
-          justifyContent: 'space-around',
-        }}>
-          <View style={{
-            marginTop: hp("2%"),
-            width: wp("100%"),
-            height: hp("68%"),
-            borderTopLeftRadius: hp("6%"),
-            backgroundColor: "white",
-            alignItems: "center",
-          }}>
-
-            <View style={{
-              flex: 1,
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-around",
+          }}
+        >
+          <View
+            style={{
+              marginTop: hp("2%"),
               width: wp("100%"),
+              height: hp("68%"),
+              borderTopLeftRadius: hp("6%"),
+              backgroundColor: "white",
               alignItems: "center",
-              paddingTop: hp("4%"),
-              marginTop: hp("3%"),
-              // backgroundColor: 'violet',
-            }}>
-              <View style={{
-                width: wp("80%"),
-                borderWidth: 1,
-                borderColor: "black",
-                borderRadius: wp("3%"),
-                padding: hp("2%"),
-              }}>
+            }}
+          >
+            <View
+              style={{
+                flex: 1,
+                width: wp("100%"),
+                alignItems: "center",
+                paddingTop: hp("4%"),
+                marginTop: hp("3%"),
+                // backgroundColor: 'violet',
+              }}
+            >
+              <View
+                style={{
+                  width: wp("80%"),
+                  borderWidth: 1,
+                  borderColor: "black",
+                  borderRadius: wp("3%"),
+                  padding: hp("2%"),
+                }}
+              >
                 <Animated.Text
                   style={[
                     styles.inputLabel,
@@ -174,12 +227,8 @@ const SignUpPage = ({ navigation }) => {
                   }}
                   placeholderTextColor="grey"
                   value={name}
-                  onFocus={() =>
-                    animateNameLabelOnFocus(nameLabelPosition)
-                  }
-                  onBlur={() =>
-                    animateLabelOnBlur(name, nameLabelPosition)
-                  }
+                  onFocus={() => animateNameLabelOnFocus(nameLabelPosition)}
+                  onBlur={() => animateLabelOnBlur(name, nameLabelPosition)}
                   onChangeText={(text) =>
                     handleInputChange(text, nameLabelPosition, setName)
                   }
@@ -187,21 +236,25 @@ const SignUpPage = ({ navigation }) => {
               </View>
             </View>
 
-            <View style={{
-              flex: 1,
-              width: wp("100%"),
-              alignItems: "center",
-              paddingTop: hp("2%"),
-              paddingBottom: hp("2%"),
-              // backgroundColor: "red",
-            }}>
-              <View style={{
-                width: wp("80%"),
-                borderWidth: 1,
-                borderColor: "black",
-                borderRadius: wp("3%"),
-                padding: hp("2%"),
-              }}>
+            <View
+              style={{
+                flex: 1,
+                width: wp("100%"),
+                alignItems: "center",
+                paddingTop: hp("2%"),
+                paddingBottom: hp("2%"),
+                // backgroundColor: "red",
+              }}
+            >
+              <View
+                style={{
+                  width: wp("80%"),
+                  borderWidth: 1,
+                  borderColor: "black",
+                  borderRadius: wp("3%"),
+                  padding: hp("2%"),
+                }}
+              >
                 <Animated.Text
                   style={[
                     styles.inputLabel,
@@ -231,20 +284,24 @@ const SignUpPage = ({ navigation }) => {
               </View>
             </View>
 
-            <View style={{
-              flex: 1,
-              width: wp("100%"),
-              alignItems: "center",
-              // backgroundColor: 'blue',
-              paddingBottom: hp("4%"),
-            }}>
-              <View style={{
-                width: wp("80%"),
-                borderWidth: 1,
-                borderColor: "black",
-                borderRadius: wp("3%"),
-                padding: hp("2%"),
-              }}>
+            <View
+              style={{
+                flex: 1,
+                width: wp("100%"),
+                alignItems: "center",
+                // backgroundColor: 'blue',
+                paddingBottom: hp("4%"),
+              }}
+            >
+              <View
+                style={{
+                  width: wp("80%"),
+                  borderWidth: 1,
+                  borderColor: "black",
+                  borderRadius: wp("3%"),
+                  padding: hp("2%"),
+                }}
+              >
                 <Animated.Text
                   style={[
                     styles.inputLabel,
@@ -275,14 +332,16 @@ const SignUpPage = ({ navigation }) => {
               </View>
             </View>
 
-            <View style={{
-              flex: 1,
-              width: wp("100%"),
-              padding: hp("2%"),
-              alignItems: "center",
-              justifyContent: "center",
-              // backgroundColor: 'lime',
-            }}>
+            <View
+              style={{
+                flex: 1,
+                width: wp("100%"),
+                padding: hp("2%"),
+                alignItems: "center",
+                justifyContent: "center",
+                // backgroundColor: 'lime',
+              }}
+            >
               <TouchableOpacity
                 style={{
                   flex: 1,
@@ -297,39 +356,50 @@ const SignUpPage = ({ navigation }) => {
                 }}
                 onPress={handleSubmitPress}
               >
-                <Text style={{
-                  fontWeight: "600",
-                  color: "white",
-                }}>Sign in</Text>
+                <Text
+                  style={{
+                    fontWeight: "600",
+                    color: "white",
+                  }}
+                >
+                  Submit
+                </Text>
               </TouchableOpacity>
             </View>
 
-            <View style={{
-              flex: 1,
-              padding: hp("2%"),
-              width: wp("100%"),
-              alignItems: "center",
-              justifyContent: "center",
-              // backgroundColor: 'tomato',
-            }}>
-              <Text style={{
-                fontSize: hp("1.8%"),
-              }}>
+            <View
+              style={{
+                flex: 1,
+                padding: hp("2%"),
+                width: wp("100%"),
+                alignItems: "center",
+                justifyContent: "center",
+                // backgroundColor: 'tomato',
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: hp("1.8%"),
+                }}
+              >
                 Don't have an account?{" "}
                 <TouchableOpacity onPress={handleLoginPress}>
-                  <Text style={{
-                    fontSize: hp("2%"),
-                    textDecorationLine: "underline",
-                    color: "black",
-                    fontWeight: "600",
-                  }}>Login!</Text>
+                  <Text
+                    style={{
+                      fontSize: hp("2%"),
+                      textDecorationLine: "underline",
+                      color: "black",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Login!
+                  </Text>
                 </TouchableOpacity>
               </Text>
             </View>
 
             <View style={styles.footer}></View>
           </View>
-
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

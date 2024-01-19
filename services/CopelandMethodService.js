@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const BASE_URL_ELECTION = "http://192.168.101.71:8080/api/v1/elections";
-const BASE_URL_BALLOT = "http://192.168.101.71:8080/api/v1/ballots";
-const AUTH_URL = "http://192.168.101.71:8080/api/v1/auth";
+const BASE_URL_ELECTION = "http://192.168.13.173:8080/api/v1/elections";
+const BASE_URL_BALLOT = "http://192.168.13.173:8080/api/v1/ballots";
+const AUTH_URL = "http://192.168.13.173:8080/api/v1/auth";
 
 // METHODS FOR REQUESTING DATA FROM OUR API
 
@@ -29,6 +29,9 @@ export const getWinner = (idNo) =>
   axios.get(`${BASE_URL_ELECTION}/${idNo}/winner`);
 export const markAsClosed = (idNo) =>
   axios.patch(`${BASE_URL_ELECTION}/${idNo}/close`);
-export const getAllVotesForElection = idNo => axios.get(BASE_URL_ELECTION + '/' + idNo + '/' + 'votes');
-export const getVotesCount = idNo => axios.get(`${BASE_URL_ELECTION}/${idNo}/votes/count`)
-export const deleteElection = idNo => axios.delete(`${BASE_URL_ELECTION}/${idNo}`)
+export const getAllVotesForElection = (idNo) =>
+  axios.get(BASE_URL_ELECTION + "/" + idNo + "/" + "votes");
+export const getVotesCount = (idNo) =>
+  axios.get(`${BASE_URL_ELECTION}/${idNo}/votes/count`);
+export const deleteElection = (idNo) =>
+  axios.delete(`${BASE_URL_ELECTION}/${idNo}`);

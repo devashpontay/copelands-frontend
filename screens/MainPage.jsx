@@ -17,6 +17,8 @@ import {
   getAllElectionsByModerator,
   getAllElectionsFromAllUsers,
 } from "../services/CopelandMethodService";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
+
 
 const MainPage = ({ navigation, route }) => {
   const [moderator, setModerator] = useState(route.params);
@@ -56,17 +58,24 @@ const MainPage = ({ navigation, route }) => {
       {/* Election items section */}
       <GestureHandlerRootView style={styles.GHRW_container}>
         {elections.length === 0 ? (
-          <ScrollView
-            style={{ width: "100%" }}
-            refreshControl={
-              <RefreshControl
-                refreshing={isFetching}
-                onRefresh={handleOnRefresh}
-              />
-            }
-          ></ScrollView>
+          <>
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>No voting session created!</Text>
+            </View>
+
+            <ScrollView
+              style={{ width: "100%" }}
+              refreshControl={
+                <RefreshControl
+                  refreshing={isFetching}
+                  onRefresh={handleOnRefresh}
+                />
+              }
+            ></ScrollView>
+          </>
         ) : (
           <FlatList
+            style={{ borderRadius: wp("2%") }}
             data={elections}
             onRefresh={handleOnRefresh}
             refreshing={isFetching}
@@ -82,6 +91,7 @@ const MainPage = ({ navigation, route }) => {
                 status={item.status}
                 candidateCount={item.candidateCount}
                 candidates={item.candidates}
+                entryDate={item.entryDate}
               />
             )}
             keyExtractor={(item) => item.idNo}
@@ -97,8 +107,18 @@ export default MainPage;
 const styles = StyleSheet.create({
   GHRW_container: {
     flex: 1,
-    marginTop: "5%",
+    marginTop: "10%",
+    marginBottom: "10%",
     alignItems: "center",
     justifyContent: "center",
+  },
+  emptyContainer: {
+    position: "absolute",
+    top: 290,
+  },
+  emptyText: {
+    color: "#5C6B73",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
